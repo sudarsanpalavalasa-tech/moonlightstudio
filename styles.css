@@ -33,7 +33,7 @@
     --glass-border: 1px solid rgba(255, 255, 255, 0.05);
     
     /* Layout */
-    --header-height: 85px;
+    --header-height: 110px;
     --max-width: 1200px;
 }
 
@@ -271,34 +271,66 @@ button, input, textarea, select {
     font-weight: 300;
 }
 
-.header-logo-img {
+/* Logo Flex Container & Typography */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+}
+
+.header-logo-icon {
+    height: 60px;
+    width: auto;
+    display: block;
+    transition: height var(--transition-medium);
+}
+
+#main-header.header-scrolled .header-logo-icon {
+    height: 48px;
+}
+
+.brand-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.15;
+    transition: transform var(--transition-medium);
+}
+
+#main-header.header-scrolled .brand-text-container {
+    transform: scale(0.92);
+}
+
+.brand-title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.brand-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.52rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-top: 1px;
+}
+
+.footer-logo-icon {
     height: 65px;
     width: auto;
     display: block;
-    filter: invert(1) hue-rotate(180deg) contrast(1.2) brightness(0.9);
-    mix-blend-mode: screen;
-    transition: opacity var(--transition-fast);
 }
 
-.header-logo-img:hover {
-    opacity: 0.85;
-}
-
-.footer-logo-img {
-    height: 80px;
+.receipt-logo-icon {
+    height: 45px;
     width: auto;
     display: block;
-    margin: 0 auto;
-    filter: invert(1) hue-rotate(180deg) contrast(1.2) brightness(0.9);
-    mix-blend-mode: screen;
-}
-
-.receipt-logo-img {
-    height: 55px;
-    width: auto;
-    display: block;
-    filter: invert(1) hue-rotate(180deg) contrast(1.2) brightness(0.9);
-    mix-blend-mode: screen;
 }
 
 .desktop-nav {
@@ -341,13 +373,17 @@ button, input, textarea, select {
     border-bottom: 1px solid transparent;
 }
 
-.header-scrolled {
+#main-header.header-scrolled {
     background-color: var(--glass-bg);
-    height: 75px;
+    height: 85px;
     border-bottom: 1px solid var(--border-light);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.header-scrolled .header-logo-img {
+    height: 70px;
 }
 
 /* Hamburger Menu Button */
@@ -841,6 +877,19 @@ button, input, textarea, select {
     margin-bottom: 24px;
 }
 
+.about-lead-author {
+    display: block;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin-top: 10px;
+    letter-spacing: 2px;
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: right;
+}
+
 .about-bio-text {
     font-size: 0.95rem;
     margin-bottom: 20px;
@@ -1115,99 +1164,7 @@ button, input, textarea, select {
 }
 
 
-/* 10. BLOG SECTION */
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
 
-.blog-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-light);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: all var(--transition-medium);
-}
-
-.blog-card-img {
-    position: relative;
-    width: 100%;
-    height: 240px;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border-light);
-}
-
-.blog-card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
-}
-
-.blog-card-date {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    background-color: rgba(5, 5, 5, 0.8);
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 6px 12px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.blog-card-content {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.blog-category {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent-gold);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.blog-card h3 {
-    font-size: 1.45rem;
-    font-weight: 300;
-    line-height: 1.3;
-    margin-bottom: 15px;
-    transition: color var(--transition-fast);
-}
-
-.blog-excerpt {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    margin-bottom: 24px;
-    color: var(--text-secondary);
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(212, 175, 55, 0.25);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    background-color: rgba(18, 18, 18, 0.8);
-}
-
-.blog-card:hover .blog-card-img img {
-    transform: scale(1.05);
-}
-
-.blog-card:hover h3 {
-    color: var(--accent-gold);
-}
 
 
 /* 11. BOOKING SCHEDULER SECTION */
@@ -1612,6 +1569,31 @@ button, input, textarea, select {
     font-size: 0.95rem;
     color: var(--text-primary);
     font-weight: 400;
+}
+
+.address-link {
+    transition: color var(--transition-fast);
+    cursor: pointer;
+}
+
+.address-link:hover {
+    color: var(--accent-gold);
+}
+
+.map-link-wrapper {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+    width: 100%;
+}
+
+.map-link-wrapper .map-placeholder {
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.map-link-wrapper:hover .map-placeholder {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.08);
 }
 
 .map-placeholder {
@@ -2125,127 +2107,7 @@ button, input, textarea, select {
 }
 
 
-/* 16. DYNAMIC BLOG READER OVERLAY MODAL */
-.blog-reader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(3, 3, 3, 0.97);
-    z-index: 1100;
-    overflow-y: auto;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--transition-medium), visibility var(--transition-medium);
-}
 
-.blog-reader-overlay[aria-hidden="false"] {
-    opacity: 1;
-    visibility: visible;
-}
-
-.blog-reader-container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 0 24px;
-    position: relative;
-}
-
-.blog-reader-close {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    font-size: 1.4rem;
-    color: var(--text-primary);
-    background-color: rgba(22, 22, 22, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    z-index: 1120;
-}
-
-.blog-reader-close:hover {
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
-}
-
-.blog-modal-header {
-    margin-bottom: 40px;
-}
-
-.blog-modal-category {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--accent-gold);
-    display: block;
-    margin-bottom: 12px;
-}
-
-.blog-modal-title {
-    font-size: 3.5rem;
-    line-height: 1.15;
-    margin-bottom: 20px;
-    font-weight: 300;
-}
-
-.blog-modal-meta {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    display: flex;
-    gap: 20px;
-    border-bottom: 1px solid var(--border-light);
-    padding-bottom: 24px;
-}
-
-.blog-modal-cover {
-    width: 100%;
-    max-height: 480px;
-    object-fit: cover;
-    margin-bottom: 50px;
-    border: 1px solid var(--border-light);
-}
-
-.blog-modal-article-text {
-    font-size: 1.05rem;
-    line-height: 1.85;
-    font-weight: 300;
-    color: #e0e0e0;
-}
-
-.blog-modal-article-text p {
-    color: #e0e0e0;
-    margin-bottom: 30px;
-}
-
-.blog-modal-article-text p:first-of-type::first-letter {
-    font-family: var(--font-serif);
-    font-size: 4rem;
-    float: left;
-    line-height: 0.8;
-    padding-right: 12px;
-    color: var(--accent-gold);
-    font-weight: 400;
-}
-
-.blog-modal-quote {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    line-height: 1.4;
-    font-style: italic;
-    color: var(--accent-gold);
-    border-left: 2px solid var(--accent-gold);
-    padding-left: 30px;
-    margin: 40px 0;
-}
 
 
 /* 17. DYNAMIC SCROLL ANIMATIONS (INTERSECTION OBSERVER) */
@@ -2313,11 +2175,7 @@ button, input, textarea, select {
         transform: none;
     }
 
-    .blog-grid {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-        margin: 0 auto;
-    }
+
 
     .booking-grid {
         grid-template-columns: 1fr;
@@ -2368,7 +2226,29 @@ button, input, textarea, select {
 /* Mobile Layout Optimization (< 768px) */
 @media (max-width: 768px) {
     :root {
-        --header-height: 75px;
+        --header-height: 90px;
+    }
+
+    #main-header.header-scrolled {
+        height: 75px;
+    }
+
+    .header-logo-icon {
+        height: 48px;
+    }
+
+    #main-header.header-scrolled .header-logo-icon {
+        height: 38px;
+    }
+
+    .brand-title {
+        font-size: 1.25rem;
+        letter-spacing: 1.5px;
+    }
+
+    .brand-subtitle {
+        font-size: 0.44rem;
+        letter-spacing: 2px;
     }
 
     .section-container {
@@ -2461,9 +2341,7 @@ button, input, textarea, select {
         font-size: 1.25rem;
     }
 
-    .blog-modal-title {
-        font-size: 2.2rem;
-    }
+
 
     /* Mobile Expanding Columns Stack vertically as rows */
     .expanding-columns-container {

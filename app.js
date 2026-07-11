@@ -4,55 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================================================
-    // 1. DATA REPOSITORY (Blog Articles Data)
-    // ==========================================================================
-    const BLOG_ARTICLES = {
-        "1": {
-            category: "Technique",
-            title: "The Art of Shadow Play: Mastering High-Contrast Lighting",
-            date: "July 4, 2026",
-            author: "Thomas Sterling",
-            coverImage: "images/portrait_1.png",
-            content: `
-                <p>Lighting is the fundamental language of photography, but all too often, photographers focus entirely on the source of illumination rather than its natural counterpart: the shadow. In fine art portraiture, shadows are not empty black space; they are structural shapes that define depth, build narrative, and evoke dramatic emotional responses.</p>
-                <p>The technique of chiaroscuro—originally popularized by Renaissance painters like Caravaggio—focuses on the sharp, painterly transitions between deep darkness and intense, singular light. When done correctly in a studio setting, this creates a three-dimensional carving of the human form that feels sculptural and timeless.</p>
-                <h4 class="blog-modal-quote">"To paint with light, one must first learn to understand the dark. The shadow details tell the real story of the subject."</h4>
-                <p>To begin experimenting with high-contrast portraiture, start with a single light source. A large softbox placed at a 90-degree angle to the subject (rim lighting) will emphasize profile contours. Alternatively, raising the light to a 45-degree angle above the head and slightly to the side (Rembrandt lighting) will create the signature triangle of light on the shadowed cheek.</p>
-                <p>Avoid using digital reflectors or fills. Let the shadow fall off into complete, rich obsidian. When post-processing, pay close attention to your tone curves. Instead of crushing the blacks completely, preserve just a microscopic amount of grain in the shadow textures to maintain a premium, analog feel.</p>
-            `
-        },
-        "2": {
-            category: "Travel",
-            title: "Icelandic Monoliths: 5 Tips for Long-Exposure Seascapes",
-            date: "June 20, 2026",
-            author: "Thomas Sterling",
-            coverImage: "images/landscape_2.png",
-            content: `
-                <p>Few places on earth challenge a landscape photographer like the southern coastline of Iceland. The black sands of Vik, combined with the towering basalt stacks rising from the roaring Atlantic, present a landscape of monumental scale and ethereal beauty. To truly capture the passage of time against these immovable giants, long-exposure photography is key.</p>
-                <p>Here are five key principles I apply during my expeditions to capture the silent majesty of volcanic seascapes:</p>
-                <p><strong>1. Invest in High-Density (ND) Filters:</strong> To smooth out wild Atlantic waves into an ethereal, misty fog, you will need exposure times ranging from 10 to 60 seconds. A 10-stop solid ND filter is an essential tool to achieve this in daylight conditions.</p>
-                <p><strong>2. Anchoring the Tripod:</strong> In Icelandic wind, standard carbon fiber tripods will vibrate, ruining image sharpness. Anchor your tripod deep into the wet volcanic sand and suspend your camera bag from the center column to add weight.</p>
-                <p><strong>3. Watch the Tide Cycles:</strong> The rogue waves at Reynisfjara are notoriously dangerous. Keep a safe distance and study the water patterns. The best compositions happen when the tide recedes, leaving a reflective glass layer on the black sand.</p>
-                <p><strong>4. Compose with Scale:</strong> Place a tiny element, like a distant rock stack or a lone cabin, in the frame to emphasize the gargantuan proportions of the surrounding cliffs.</p>
-                <p><strong>5. Manual Focus in Low Light:</strong> The sea mist and ND filter will cause auto-focus sensors to hunt. Disable auto-focus, zoom in using your camera's live view display, and lock focus manually on the sharpest basalt stack before attaching the filter.</p>
-            `
-        },
-        "3": {
-            category: "Aesthetics",
-            title: "Why Minimalism Wins in Modern Editorial Design",
-            date: "May 15, 2026",
-            author: "Thomas Sterling",
-            coverImage: "images/fashion_2.png",
-            content: `
-                <p>In a world characterized by constant visual noise, digital clutter, and blinking banner ads, quietness has become the ultimate luxury. Minimalism in editorial fashion photography is not simply the absence of color or props; it is a deliberate, highly calculated curation of negative space that forces the viewer's eye to rest on the essential core.</p>
-                <p>A minimalist photo works by lowering the cognitive load on the viewer. By stripping away busy street scenes, complex background textures, or excessive accessories, we highlight the elegant flow of a drape, the geometric angle of a model's posture, or the subtle texture of plaster wall shadows.</p>
-                <h4 class="blog-modal-quote">"Simplicity is not the lack of clutter, but the presence of clarity."</h4>
-                <p>To achieve this aesthetic, focus on color harmony. Monochromatic palettes—such as sand, ivory, charcoal, and warm bronze—cooperate to build a sense of high-end calmness. Contrast this with dynamic posing: a bold, angled body shape stands out dramatically against a vast, empty studio canvas.</p>
-                <p>Remember that in minimalist compositions, every tiny detail counts. A single stray hair, an unpressed wrinkle in the fabric, or an uneven shadow line will break the illusion. Master your set details before pressing the shutter, and let the negative space breathe.</p>
-            `
-        }
-    };
+
 
     // Global Helper: Email validation format check
     function validateEmail(email) {
@@ -466,81 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
 
 
-    // ==========================================================================
-    // 9. DYNAMIC BLOG READ MODAL SYSTEM
-    // ==========================================================================
-    const blogReaderModal = document.getElementById('blog-reader-modal');
-    const blogReaderClose = document.getElementById('blog-modal-close-btn');
-    const blogModalBody = document.getElementById('blog-modal-article-body');
-    const blogCards = document.querySelectorAll('.blog-card');
 
-    function openBlogArticle(postId) {
-        const article = BLOG_ARTICLES[postId];
-        if (!article) return;
-
-        // Generate full semantic layout
-        const articleHtml = `
-            <div class="blog-modal-header">
-                <span class="blog-modal-category">${article.category}</span>
-                <h1 class="blog-modal-title">${article.title}</h1>
-                <div class="blog-modal-meta">
-                    <span><i class="fa-solid fa-user"></i> By ${article.author}</span>
-                    <span><i class="fa-solid fa-calendar-days"></i> Published ${article.date}</span>
-                </div>
-            </div>
-            <img class="blog-modal-cover" src="${article.coverImage}" alt="${article.title}">
-            <div class="blog-modal-article-text">
-                ${article.content}
-            </div>
-        `;
-
-        blogModalBody.innerHTML = articleHtml;
-        blogReaderModal.setAttribute('aria-hidden', 'false');
-        blogReaderModal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // lock scrolling
-
-        // Smooth fade-in animation
-        void blogReaderModal.offsetWidth;
-        blogReaderModal.style.opacity = '1';
-    }
-
-    function closeBlogArticle() {
-        blogReaderModal.style.opacity = '0';
-        setTimeout(() => {
-            blogReaderModal.setAttribute('aria-hidden', 'true');
-            blogReaderModal.style.display = 'none';
-            blogModalBody.innerHTML = '';
-            document.body.style.overflow = ''; // unlock scroll
-        }, 300);
-    }
-
-    blogCards.forEach(card => {
-        const readBtn = card.querySelector('.read-more-trigger');
-        const imgBox = card.querySelector('.blog-card-img');
-        const titleBox = card.querySelector('.blog-card-content h3');
-        const postId = card.getAttribute('data-post-id');
-
-        // Open article on clicking title, image, or button
-        [readBtn, imgBox, titleBox].forEach(trigger => {
-            if (trigger) {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openBlogArticle(postId);
-                });
-            }
-        });
-    });
-
-    if (blogReaderClose) {
-        blogReaderClose.addEventListener('click', closeBlogArticle);
-    }
-
-    // Close on clicking backdrop
-    blogReaderModal.addEventListener('click', (e) => {
-        if (e.target === blogReaderModal || e.target.classList.contains('blog-reader-container')) {
-            closeBlogArticle();
-        }
-    });
 
 
     // ==========================================================================

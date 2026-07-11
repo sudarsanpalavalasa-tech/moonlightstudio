@@ -22,7 +22,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.1">
 </head>
 
 <body>
@@ -34,7 +34,11 @@
     <header id="main-header" class="header-transparent">
         <div class="header-container">
             <a href="#home" class="logo" id="nav-logo">
-                <img src="images/logo.jpg" alt="Moonlight Studio & Photography Logo" class="header-logo-img">
+                <img src="images/logo_icon.png" alt="Moonlight Studio Graphic Mark" class="header-logo-icon">
+                <div class="brand-text-container">
+                    <span class="brand-title">Moonlight</span>
+                    <span class="brand-subtitle">Studio &amp; Photography</span>
+                </div>
             </a>
 
             <!-- Desktop Nav Menu -->
@@ -43,7 +47,6 @@
                 <a href="#portfolio" class="nav-link" id="nav-link-portfolio">Portfolio</a>
                 <a href="#about" class="nav-link" id="nav-link-about">About</a>
                 <a href="#services" class="nav-link" id="nav-link-services">Services</a>
-                <a href="#blog" class="nav-link" id="nav-link-blog">Blog</a>
                 <a href="#booking" class="nav-link" id="nav-link-booking">Book Session</a>
                 <a href="#contact" class="nav-link" id="nav-link-contact">Contact</a>
             </nav>
@@ -64,7 +67,6 @@
             <a href="#portfolio" class="mobile-link" id="mob-link-portfolio">Portfolio</a>
             <a href="#about" class="mobile-link" id="mob-link-about">About</a>
             <a href="#services" class="mobile-link" id="mob-link-services">Services</a>
-            <a href="#blog" class="mobile-link" id="mob-link-blog">Blog</a>
             <a href="#booking" class="mobile-link" id="mob-link-booking">Book Session</a>
             <a href="#contact" class="mobile-link" id="mob-link-contact">Contact</a>
         </nav>
@@ -355,13 +357,20 @@
 
                         <p class="about-bio-lead">
                             "Capturing timeless moments with creativity, elegance, and passion."
+                            <span class="about-lead-author">— Janaki Ravi</span>
                         </p>
 
                         <p class="about-bio-text">
-                            Moonlight Studio & Photography is a creative photography and cinematic videography studio dedicated to preserving life's most meaningful moments. From weddings and portraits to events and commercial projects, we blend artistic vision with modern technology to create stunning visuals that tell your unique story.
+                            Moonlight Studio & Photography is a creative photography and cinematic videography studio
+                            dedicated to preserving life's most meaningful moments. From weddings and portraits to
+                            events and commercial projects, we blend artistic vision with modern technology to create
+                            stunning visuals that tell your unique story.
                         </p>
                         <p class="about-bio-text">
-                            Every session is thoughtfully planned, professionally captured, and carefully edited to deliver exceptional quality and lasting memories. Our commitment to creativity, precision, and client satisfaction ensures an unforgettable experience from the first click to the final delivery.
+                            Every session is thoughtfully planned, professionally captured, and carefully edited to
+                            deliver exceptional quality and lasting memories. Our commitment to creativity, precision,
+                            and client satisfaction ensures an unforgettable experience from the first click to the
+                            final delivery.
                         </p>
 
                         <!-- Closing Tagline -->
@@ -394,13 +403,11 @@
 
                 <!-- Worked with Logos Grid -->
                 <div class="about-brands">
-                    <h3 class="brands-title">Collaborators & Publishing Partners</h3>
-                    <div class="brands-grid">
-                        <div class="brand-item"><i class="fa-solid fa-leaf"></i> National Geo</div>
-                        <div class="brand-item"><i class="fa-solid fa-crown"></i> Vogue Art</div>
-                        <div class="brand-item"><i class="fa-solid fa-compass"></i> Horizon Mag</div>
-                        <div class="brand-item"><i class="fa-solid fa-cube"></i> Bauhaus Int</div>
-                        <div class="brand-item"><i class="fa-solid fa-infinity"></i> Edge Gallery</div>
+                    <h3 class="brands-title">Bespoke Collaborations</h3>
+                    <div class="brands-grid" style="justify-content: center;">
+                        <div class="brand-item" style="font-size: 1.8rem; letter-spacing: 2px; color: var(--text-primary);">
+                            <i class="fa-solid fa-gem" style="color: var(--accent-gold);"></i> Vasundhara Jewellers
+                        </div>
                     </div>
                 </div>
 
@@ -419,7 +426,9 @@
                 <!-- Tagline introduction banner -->
                 <div class="services-intro animate-on-scroll fade-up">
                     <p class="services-tagline-text">
-                        "At Moon Light Studio & Photography, we capture moments that last a lifetime. From life's sweetest beginnings to your biggest celebrations and brand stories, we create images that speak from the heart."
+                        "At Moon Light Studio & Photography, we capture moments that last a lifetime. From life's
+                        sweetest beginnings to your biggest celebrations and brand stories, we create images that speak
+                        from the heart."
                     </p>
                 </div>
 
@@ -433,7 +442,8 @@
                             <i class="fa-solid fa-camera-retro"></i>
                         </div>
                         <h3>Photoshoots & Portraiture</h3>
-                        <p class="service-description">Capturing human emotion and precious milestones in specialized studio and outdoor setups.</p>
+                        <p class="service-description">Capturing human emotion and precious milestones in specialized
+                            studio and outdoor setups.</p>
                         <ul class="service-features">
                             <li><i class="fa-solid fa-check text-gold"></i> Photoshoots</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Maternity Shoots</li>
@@ -441,6 +451,8 @@
                             <li><i class="fa-solid fa-check text-gold"></i> Kids Photography</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Model Shoots</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Pre Wedding Shoots</li>
+                            <li><i class="fa-solid fa-check text-gold"></i> Reel Shoots</li>
+
                         </ul>
                         <a href="#booking" class="btn btn-outline card-cta" data-package="Photoshoots">Book Session</a>
                     </div>
@@ -453,7 +465,8 @@
                             <i class="fa-solid fa-ring"></i>
                         </div>
                         <h3>Weddings & Commercials</h3>
-                        <p class="service-description">Premium coverage for grand ceremonies, wedding milestones, branding assets, and corporate packages.</p>
+                        <p class="service-description">Premium coverage for grand ceremonies, wedding milestones,
+                            branding assets, and corporate packages.</p>
                         <ul class="service-features">
                             <li><i class="fa-solid fa-check text-gold"></i> Wedding Shoots</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Half Saree Shoots</li>
@@ -462,7 +475,8 @@
                             <li><i class="fa-solid fa-check text-gold"></i> Product Shoots</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Corporate Shoots</li>
                         </ul>
-                        <a href="#booking" class="btn btn-primary card-cta" data-package="Weddings & Commercials">Book Shoot</a>
+                        <a href="#booking" class="btn btn-primary card-cta" data-package="Weddings & Commercials">Book
+                            Shoot</a>
                     </div>
 
                     <!-- Column 3: Lab, Gifts & Production -->
@@ -472,7 +486,8 @@
                             <i class="fa-solid fa-print"></i>
                         </div>
                         <h3>Lab, Gifts & Production</h3>
-                        <p class="service-description">Fine-art printing, personalized gift accessories, custom framework, and high-fidelity video editing.</p>
+                        <p class="service-description">Fine-art printing, personalized gift accessories, custom
+                            framework, and high-fidelity video editing.</p>
                         <ul class="service-features">
                             <li><i class="fa-solid fa-check text-gold"></i> Event Photography</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Mug Printing</li>
@@ -481,77 +496,18 @@
                             <li><i class="fa-solid fa-check text-gold"></i> Pas Photos</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Photo Printings</li>
                             <li><i class="fa-solid fa-check text-gold"></i> Video Editing</li>
+                            <li><i class="fa-solid fa-check text-gold"></i> Album Services</li>
+
                         </ul>
-                        <a href="#booking" class="btn btn-outline card-cta" data-package="Custom Print/Video Project">Inquire Project</a>
+                        <a href="#booking" class="btn btn-outline card-cta"
+                            data-package="Custom Print/Video Project">Inquire Project</a>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <!-- 5. BLOG SECTION -->
-        <section id="blog" class="view-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-subtitle">Studio Notebook</span>
-                    <h2 class="section-title">Insights & Articles</h2>
-                    <div class="title-underline"></div>
-                </div>
 
-                <!-- Editorial Blog Grid -->
-                <div class="blog-grid" id="blog-posts-grid">
-
-                    <!-- Post 1 -->
-                    <article class="blog-card" data-post-id="1">
-                        <div class="blog-card-img">
-                            <img src="images/portrait_1.png" alt="The Art of Shadow Play" loading="lazy">
-                            <div class="blog-card-date">July 4, 2026</div>
-                        </div>
-                        <div class="blog-card-content">
-                            <span class="blog-category">Technique</span>
-                            <h3>The Art of Shadow Play: Mastering High-Contrast Lighting</h3>
-                            <p class="blog-excerpt">Exploring how to harness dramatic chiaroscuro effects inside your
-                                home studio. Learn to paint with ambient shadow rather than overpowering flash...</p>
-                            <button class="btn-text read-more-trigger">Read Full Article <i
-                                    class="fa-solid fa-arrow-right-long"></i></button>
-                        </div>
-                    </article>
-
-                    <!-- Post 2 -->
-                    <article class="blog-card" data-post-id="2">
-                        <div class="blog-card-img">
-                            <img src="images/landscape_2.png" alt="Volcanic Sands Exposure" loading="lazy">
-                            <div class="blog-card-date">June 20, 2026</div>
-                        </div>
-                        <div class="blog-card-content">
-                            <span class="blog-category">Travel</span>
-                            <h3>Icelandic Monoliths: 5 Tips for Long-Exposure Seascapes</h3>
-                            <p class="blog-excerpt">A complete walkthrough of the neutral density filters, tripods, and
-                                exposure mechanics used to capture the ethereal motion of volcanic tides...</p>
-                            <button class="btn-text read-more-trigger">Read Full Article <i
-                                    class="fa-solid fa-arrow-right-long"></i></button>
-                        </div>
-                    </article>
-
-                    <!-- Post 3 -->
-                    <article class="blog-card" data-post-id="3">
-                        <div class="blog-card-img">
-                            <img src="images/fashion_2.png" alt="Minimalist Drapery composition" loading="lazy">
-                            <div class="blog-card-date">May 15, 2026</div>
-                        </div>
-                        <div class="blog-card-content">
-                            <span class="blog-category">Aesthetics</span>
-                            <h3>Why Minimalism Wins in Modern Editorial Design</h3>
-                            <p class="blog-excerpt">Deconstructing visual layouts to understand how empty space and
-                                quiet backgrounds give models and designer brands their premium, luxury feel...</p>
-                            <button class="btn-text read-more-trigger">Read Full Article <i
-                                    class="fa-solid fa-arrow-right-long"></i></button>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
 
         <!-- 6. BOOKING SECTION [NEW] -->
         <section id="booking" class="view-section">
@@ -695,8 +651,7 @@
                                 <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                                 <div class="info-content">
                                     <span class="info-label">Corporate Email</span>
-                                    <a href="mailto:itsravi2711@gmail.com"
-                                        class="info-text">itsravi2711@gmail.com</a>
+                                    <a href="mailto:itsravi2711@gmail.com" class="info-text">itsravi2711@gmail.com</a>
                                 </div>
                             </div>
 
@@ -712,24 +667,28 @@
                                 <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
                                 <div class="info-content">
                                     <span class="info-label">Bespoke Atelier</span>
-                                    <span class="info-text">Moon Light Studio & Photography
+                                    <a href="https://maps.app.goo.gl/Znw2afR1CPxxCujc8" target="_blank" class="info-text address-link">
+                                        Moon Light Studio & Photography<br>
                                         opp. padamaja hospitals and cmr carlan square, Near Alluri Seetharama Raju
-                                        Statue, KRM Colony, Seethammadara, Visakhapatnam, Andhra Pradesh 530013</span>
+                                        Statue, KRM Colony, Seethammadara, Visakhapatnam, Andhra Pradesh 530013
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Stylized Map Placeholder (Minimal Dark Theme) -->
-                        <div class="map-placeholder">
-                            <div class="map-overlay">
-                                <div class="map-marker">
-                                    <div class="pulse"></div>
-                                    <i class="fa-solid fa-camera"></i>
+                        <!-- Stylized Map Placeholder (Minimal Dark Theme) Linked to Google Maps -->
+                        <a href="https://maps.app.goo.gl/Znw2afR1CPxxCujc8" target="_blank" class="map-link-wrapper" aria-label="Open location in Google Maps">
+                            <div class="map-placeholder">
+                                <div class="map-overlay">
+                                    <div class="map-marker">
+                                        <div class="pulse"></div>
+                                        <i class="fa-solid fa-camera"></i>
+                                    </div>
+                                    <div class="map-tooltip">Open Live Location</div>
                                 </div>
-                                <div class="map-tooltip">Moonlight Atelier</div>
+                                <div class="map-lines"></div>
                             </div>
-                            <div class="map-lines"></div>
-                        </div>
+                        </a>
 
                         <div class="social-links-container">
                             <span class="social-label">Follow Moonlight:</span>
@@ -814,7 +773,13 @@
         <div class="footer-container">
             <div class="footer-top">
                 <div class="footer-logo">
-                    <img src="images/logo.jpg" alt="Moonlight Studio & Photography Logo" class="footer-logo-img">
+                    <a href="#home" class="logo" style="justify-content: center;">
+                        <img src="images/logo_icon.png" alt="Moonlight Studio Graphic Mark" class="footer-logo-icon">
+                        <div class="brand-text-container" style="text-align: left;">
+                            <span class="brand-title">Moonlight</span>
+                            <span class="brand-subtitle">Studio &amp; Photography</span>
+                        </div>
+                    </a>
                 </div>
                 <p class="footer-tagline">Preserving luxury moments, shaping structural shadows, printing fine-art
                     visual realities.</p>
@@ -853,8 +818,12 @@
             <div class="receipt-invoice-card">
                 <div class="receipt-glow-border"></div>
                 <div class="receipt-header">
-                    <div class="receipt-logo">
-                        <img src="images/logo.jpg" alt="Moonlight Studio & Photography Logo" class="receipt-logo-img">
+                    <div class="receipt-logo" style="display: flex; align-items: center; gap: 10px;">
+                        <img src="images/logo_icon.png" alt="Moonlight Studio Graphic Mark" class="receipt-logo-icon">
+                        <div class="brand-text-container" style="text-align: left; line-height: 1.15;">
+                            <span class="brand-title" style="font-size: 1.3rem;">Moonlight</span>
+                            <span class="brand-subtitle" style="font-size: 0.45rem; margin-top: 1px;">Studio &amp; Photography</span>
+                        </div>
                     </div>
                     <span class="receipt-badge">Booking Confirmed</span>
                 </div>
@@ -927,22 +896,10 @@
         </div>
     </div>
 
-    <!-- GLOBAL BLOG DYNAMIC READER MODAL -->
-    <div id="blog-reader-modal" class="blog-reader-overlay" aria-hidden="true" role="dialog">
-        <div class="blog-reader-container">
-            <!-- Close Button -->
-            <button class="blog-reader-close" id="blog-modal-close-btn" aria-label="Close Article"><i
-                    class="fa-solid fa-xmark"></i></button>
 
-            <!-- Dynamic Modal Content Holder -->
-            <div class="blog-reader-body" id="blog-modal-article-body">
-                <!-- Injected via JavaScript -->
-            </div>
-        </div>
-    </div>
 
     <!-- Core Script -->
-    <script src="app.js"></script>
+    <script src="app.js?v=1.1"></script>
 </body>
 
 </html>
