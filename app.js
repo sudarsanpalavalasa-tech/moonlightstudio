@@ -784,7 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const notesVal = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value.trim() : '';
 
-                const email = "ravikoppala1977@gmail.com";
+                const email = "itsravi2711@gmail.com";
                 const subject = encodeURIComponent(`Studio Booking Reservation: ${invoiceCode}`);
                 const body = encodeURIComponent(
                     `Reservation ID: ${invoiceCode}\n` +
@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
-                const email = "ravikoppala1977@gmail.com";
+                const email = "itsravi2711@gmail.com";
                 const subject = encodeURIComponent(subjectInput.value.trim());
                 const body = encodeURIComponent(
                     `Name: ${nameInput.value.trim()}\n` +
