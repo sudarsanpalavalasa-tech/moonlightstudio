@@ -784,47 +784,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const notesVal = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value.trim() : '';
 
-                fetch("https://formsubmit.co/ajax/ravikoppala1977@gmail.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "Reservation ID": invoiceCode,
-                        "Client Name": bookingInputs[0].value.trim(),
-                        "Client Email": bookingInputs[1].value.trim(),
-                        "Client Phone": bookingInputs[2].value.trim(),
-                        "Selected Date": formattedDate,
-                        "Selected Time": bookingState.time,
-                        "Selected Package": bookingState.package || "General Session",
-                        "Creative Notes": notesVal
-                    })
-                })
-                    .then(response => {
-                        bookingSubmitBtn.classList.remove('submitting');
-                        bookingSubmitBtn.disabled = false;
+                const email = "ravikoppala1977@gmail.com";
+                const subject = encodeURIComponent(`Studio Booking Reservation: ${invoiceCode}`);
+                const body = encodeURIComponent(
+                    `Reservation ID: ${invoiceCode}\n` +
+                    `Client Name: ${bookingInputs[0].value.trim()}\n` +
+                    `Client Email: ${bookingInputs[1].value.trim()}\n` +
+                    `Client Phone: ${bookingInputs[2].value.trim()}\n` +
+                    `Selected Date: ${formattedDate}\n` +
+                    `Selected Time: ${bookingState.time}\n` +
+                    `Selected Package: ${bookingState.package || "General Session"}\n\n` +
+                    `Creative Notes:\n${notesVal}`
+                );
 
-                        if (response.ok) {
-                            // Inject values into receipt modal fields
-                            receiptCode.textContent = invoiceCode;
-                            receiptName.textContent = bookingInputs[0].value.trim();
-                            receiptEmail.textContent = bookingInputs[1].value.trim();
-                            receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
+                // Open default email client with pre-filled details
+                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
 
-                            // Open Receipt Overlay Dialog
-                            receiptModal.setAttribute('aria-hidden', 'false');
-                            receiptModal.style.display = 'flex';
-                            document.body.style.overflow = 'hidden'; // lock background scrolling
-                        } else {
-                            alert("There was an error saving your booking reservation. Please try again.");
-                        }
-                    })
-                    .catch(error => {
-                        bookingSubmitBtn.classList.remove('submitting');
-                        bookingSubmitBtn.disabled = false;
-                        alert("There was a connection error. Please try again.");
-                    });
+                setTimeout(() => {
+                    bookingSubmitBtn.classList.remove('submitting');
+                    bookingSubmitBtn.disabled = false;
+
+                    // Inject values into receipt modal fields
+                    receiptCode.textContent = invoiceCode;
+                    receiptName.textContent = bookingInputs[0].value.trim();
+                    receiptEmail.textContent = bookingInputs[1].value.trim();
+                    receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
+
+                    // Open Receipt Overlay Dialog
+                    receiptModal.setAttribute('aria-hidden', 'false');
+                    receiptModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // lock background scrolling
+                }, 1000);
             }
         });
     }
@@ -919,35 +909,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
-                fetch("https://formsubmit.co/ajax/ravikoppala1977@gmail.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "Name": nameInput.value.trim(),
-                        "Email": emailInput.value.trim(),
-                        "Subject": subjectInput.value.trim(),
-                        "Message": messageInput.value.trim()
-                    })
-                })
-                    .then(response => {
-                        submitBtn.classList.remove('submitting');
-                        submitBtn.disabled = false;
+                const email = "ravikoppala1977@gmail.com";
+                const subject = encodeURIComponent(subjectInput.value.trim());
+                const body = encodeURIComponent(
+                    `Name: ${nameInput.value.trim()}\n` +
+                    `Email: ${emailInput.value.trim()}\n\n` +
+                    `Message:\n${messageInput.value.trim()}`
+                );
 
-                        if (response.ok) {
-                            // Show success display panel
-                            successOverlay.classList.add('open');
-                        } else {
-                            alert("There was an error sending your inquiry. Please try again.");
-                        }
-                    })
-                    .catch(error => {
-                        submitBtn.classList.remove('submitting');
-                        submitBtn.disabled = false;
-                        alert("There was a connection error. Please try again.");
-                    });
+                // Open default email client with pre-filled details
+                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+
+                setTimeout(() => {
+                    submitBtn.classList.remove('submitting');
+                    submitBtn.disabled = false;
+
+                    // Show success display panel
+                    successOverlay.classList.add('open');
+                }, 1000);
             }
         });
     }
