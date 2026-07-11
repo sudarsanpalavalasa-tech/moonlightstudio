@@ -784,7 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const notesVal = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value.trim() : '';
 
-                fetch("https://formsubmit.co/ajax/sudarsanpalavalasa@gmail.com", {
+                fetch("https://formsubmit.co/ajax/ravikoppala1977@gmail.com", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -919,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
-                fetch("https://formsubmit.co/ajax/sudarsanpalavalasa@gmail.com", {
+                fetch("https://formsubmit.co/ajax/ravikoppala1977@gmail.com", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
