@@ -776,32 +776,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 bookingSubmitBtn.classList.add('submitting');
                 bookingSubmitBtn.disabled = true;
 
-                // Simulate API call (1.5 seconds)
-                setTimeout(() => {
-                    // Release button loading
+                const invoiceCode = `MLS-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+                const formattedDate = bookingState.date.toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                const notesVal = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value.trim() : '';
+
+                fetch("https://formsubmit.co/ajax/moonlightstudiopro369@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "Reservation ID": invoiceCode,
+                        "Client Name": bookingInputs[0].value.trim(),
+                        "Client Email": bookingInputs[1].value.trim(),
+                        "Client Phone": bookingInputs[2].value.trim(),
+                        "Selected Date": formattedDate,
+                        "Selected Time": bookingState.time,
+                        "Selected Package": bookingState.package || "General Session",
+                        "Creative Notes": notesVal
+                    })
+                })
+                .then(response => {
                     bookingSubmitBtn.classList.remove('submitting');
                     bookingSubmitBtn.disabled = false;
+                    
+                    if (response.ok) {
+                        // Inject values into receipt modal fields
+                        receiptCode.textContent = invoiceCode;
+                        receiptName.textContent = bookingInputs[0].value.trim();
+                        receiptEmail.textContent = bookingInputs[1].value.trim();
+                        receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
 
-                    // Compile details for receipt popup
-                    const invoiceCode = `MLS-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-                    const formattedDate = bookingState.date.toLocaleDateString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-
-                    // Inject values into receipt modal fields
-                    receiptCode.textContent = invoiceCode;
-                    receiptName.textContent = bookingInputs[0].value.trim();
-                    receiptEmail.textContent = bookingInputs[1].value.trim();
-
-                    receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
-
-                    // Open Receipt Overlay Dialog
-                    receiptModal.setAttribute('aria-hidden', 'false');
-                    receiptModal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden'; // lock background scrolling
-                }, 1500);
+                        // Open Receipt Overlay Dialog
+                        receiptModal.setAttribute('aria-hidden', 'false');
+                        receiptModal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden'; // lock background scrolling
+                    } else {
+                        alert("There was an error saving your booking reservation. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    bookingSubmitBtn.classList.remove('submitting');
+                    bookingSubmitBtn.disabled = false;
+                    alert("There was a connection error. Please try again.");
+                });
             }
         });
     }
@@ -896,14 +919,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
-                // Simulate server dispatch (1.5 seconds)
-                setTimeout(() => {
+                fetch("https://formsubmit.co/ajax/moonlightstudiopro369@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "Name": nameInput.value.trim(),
+                        "Email": emailInput.value.trim(),
+                        "Subject": subjectInput.value.trim(),
+                        "Message": messageInput.value.trim()
+                    })
+                })
+                .then(response => {
                     submitBtn.classList.remove('submitting');
                     submitBtn.disabled = false;
                     
-                    // Show success display panel
-                    successOverlay.classList.add('open');
-                }, 1500);
+                    if (response.ok) {
+                        // Show success display panel
+                        successOverlay.classList.add('open');
+                    } else {
+                        alert("There was an error sending your inquiry. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    submitBtn.classList.remove('submitting');
+                    submitBtn.disabled = false;
+                    alert("There was a connection error. Please try again.");
+                });
             }
         });
     }
