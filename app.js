@@ -3,7 +3,7 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // ==========================================================================
     // 1. DATA REPOSITORY (Blog Articles Data)
     // ==========================================================================
@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
     const mobileLinks = document.querySelectorAll('.mobile-link');
     const mainHeader = document.getElementById('main-header');
-    
+
     function navigateToSection() {
         const hash = window.location.hash || '#home';
         let targetSection = document.querySelector(hash);
-        
+
         if (!targetSection) {
             targetSection = document.getElementById('home');
         }
@@ -89,17 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Display targeted section with delay
         setTimeout(() => {
             sections.forEach(sec => sec.classList.remove('active-view', 'animate-view-in'));
-            
+
             targetSection.classList.add('active-view');
-            
+
             // Force a reflow for smooth transform animation
             void targetSection.offsetWidth;
-            
+
             targetSection.classList.add('animate-view-in');
-            
+
             // Reset scroll position on page change
             window.scrollTo({ top: 0, behavior: 'instant' });
-            
+
             // Adjust header styling states
             toggleHeaderBackground(hash);
         }, 300);
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set initial view and bind hash changes
     window.addEventListener('hashchange', navigateToSection);
-    
+
     // Trigger on page refresh load
     if (!window.location.hash) {
         window.location.hash = '#home';
@@ -161,11 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     const hamburgerBtn = document.getElementById('hamburger-menu-btn');
     const mobileOverlay = document.getElementById('mobile-nav-overlay');
-    
+
     function toggleMobileMenu() {
         const isOpen = hamburgerBtn.classList.toggle('open');
         mobileOverlay.classList.toggle('open', isOpen);
-        
+
         // Prevent body scroll when menu overlay is open
         document.body.style.overflow = isOpen ? 'hidden' : '';
     }
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     hamburgerBtn.addEventListener('click', toggleMobileMenu);
-    
+
     // Close mobile overlay on clicking any navigation links
     mobileLinks.forEach(link => {
         link.addEventListener('click', closeMobileMenu);
@@ -208,14 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (packageName) {
                 bookingState.package = packageName;
                 if (hiddenPackageInput) hiddenPackageInput.value = packageName;
-                
+
                 if (summaryPackage) {
                     summaryPackage.textContent = packageName;
                     summaryPackage.classList.add('text-gold');
                 }
-                
+
                 if (bookingWarning) bookingWarning.style.display = 'none';
-                
+
                 // Route automatically to Booking
                 window.location.hash = '#booking';
             }
@@ -285,11 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function openLightbox(index) {
         updateActiveItemsList();
         activeLightboxIndex = index;
-        
+
         lightbox.setAttribute('aria-hidden', 'false');
         lightbox.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Lock background scrolling
-        
+
         loadLightboxContent();
     }
 
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadLightboxContent() {
         if (activeItemsList.length === 0) return;
-        
+
         // Wrap-around boundary handling
         if (activeLightboxIndex >= activeItemsList.length) activeLightboxIndex = 0;
         if (activeLightboxIndex < 0) activeLightboxIndex = activeItemsList.length - 1;
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const counterInterval = setInterval(() => {
                 stepIndex++;
                 currentCount += stepValue;
-                
+
                 if (stepIndex >= steps) {
                     num.textContent = targetCount;
                     clearInterval(counterInterval);
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     // 10. INTERACTIVE BOOKING ENGINE (Calendar, Time Slots, & Receipt Modal)
     // ==========================================================================
-    
+
     // Selection state trackers
     let bookingState = {
         date: null, // Date object
@@ -559,10 +559,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevMonthBtn = document.getElementById('calendar-prev-month');
     const nextMonthBtn = document.getElementById('calendar-next-month');
     const timeSlots = document.querySelectorAll('.time-slot-btn');
-    
+
     const summaryDate = document.getElementById('summary-date-val');
     const summaryTime = document.getElementById('summary-time-val');
-    
+
     const bookingForm = document.getElementById('session-booking-form');
     const bookingWarning = document.getElementById('booking-alert-box');
     const bookingSubmitBtn = document.getElementById('booking-submit-btn');
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const receiptModal = document.getElementById('booking-receipt-modal');
     const receiptClose = document.getElementById('receipt-close-btn');
     const receiptDone = document.getElementById('receipt-done-btn');
-    
+
     const receiptCode = document.getElementById('receipt-code-val');
     const receiptName = document.getElementById('receipt-name-val');
     const receiptEmail = document.getElementById('receipt-email-val');
@@ -583,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let displayMonth = 6; // July (0-indexed, so 6 is July)
 
     const monthNames = [
-        "January", "February", "March", "April", "May", "June", 
+        "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
 
@@ -610,19 +610,19 @@ document.addEventListener('DOMContentLoaded', () => {
             dayCell.textContent = day;
 
             const cellDate = new Date(year, month, day);
-            
+
             // Check if day is in the past relative to local time (July 7, 2026)
             // (We set mock system time to 2026-07-07)
             const targetMinDate = new Date(2026, 6, 7);
-            
+
             if (cellDate < targetMinDate) {
                 dayCell.classList.add('disabled-day');
                 dayCell.disabled = true;
             } else {
                 // If it is our selected date, style it
-                if (bookingState.date && 
-                    bookingState.date.getDate() === day && 
-                    bookingState.date.getMonth() === month && 
+                if (bookingState.date &&
+                    bookingState.date.getDate() === day &&
+                    bookingState.date.getMonth() === month &&
                     bookingState.date.getFullYear() === year) {
                     dayCell.classList.add('active-date');
                 }
@@ -631,10 +631,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update active styling
                     document.querySelectorAll('.calendar-day').forEach(cell => cell.classList.remove('active-date'));
                     dayCell.classList.add('active-date');
-                    
+
                     // Update State
                     bookingState.date = cellDate;
-                    
+
                     // Update summary display UI
                     const formattedDate = cellDate.toLocaleDateString('en-US', {
                         month: 'long',
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     summaryDate.textContent = formattedDate;
                     summaryDate.classList.add('text-gold');
-                    
+
                     // Hide alerts if active
                     bookingWarning.style.display = 'none';
                 });
@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             summaryTime.textContent = selectedTimeVal;
             summaryTime.classList.add('text-gold');
-            
+
             bookingWarning.style.display = 'none';
         });
     });
@@ -784,7 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const notesVal = document.getElementById('booking-notes') ? document.getElementById('booking-notes').value.trim() : '';
 
-                fetch("https://formsubmit.co/ajax/moonlightstudiopro369@gmail.com", {
+                fetch("https://formsubmit.co/ajax/sudarsanpalavalasa@gmail.com", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -801,30 +801,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         "Creative Notes": notesVal
                     })
                 })
-                .then(response => {
-                    bookingSubmitBtn.classList.remove('submitting');
-                    bookingSubmitBtn.disabled = false;
-                    
-                    if (response.ok) {
-                        // Inject values into receipt modal fields
-                        receiptCode.textContent = invoiceCode;
-                        receiptName.textContent = bookingInputs[0].value.trim();
-                        receiptEmail.textContent = bookingInputs[1].value.trim();
-                        receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
+                    .then(response => {
+                        bookingSubmitBtn.classList.remove('submitting');
+                        bookingSubmitBtn.disabled = false;
 
-                        // Open Receipt Overlay Dialog
-                        receiptModal.setAttribute('aria-hidden', 'false');
-                        receiptModal.style.display = 'flex';
-                        document.body.style.overflow = 'hidden'; // lock background scrolling
-                    } else {
-                        alert("There was an error saving your booking reservation. Please try again.");
-                    }
-                })
-                .catch(error => {
-                    bookingSubmitBtn.classList.remove('submitting');
-                    bookingSubmitBtn.disabled = false;
-                    alert("There was a connection error. Please try again.");
-                });
+                        if (response.ok) {
+                            // Inject values into receipt modal fields
+                            receiptCode.textContent = invoiceCode;
+                            receiptName.textContent = bookingInputs[0].value.trim();
+                            receiptEmail.textContent = bookingInputs[1].value.trim();
+                            receiptDatetime.textContent = `${formattedDate} @ ${bookingState.time}`;
+
+                            // Open Receipt Overlay Dialog
+                            receiptModal.setAttribute('aria-hidden', 'false');
+                            receiptModal.style.display = 'flex';
+                            document.body.style.overflow = 'hidden'; // lock background scrolling
+                        } else {
+                            alert("There was an error saving your booking reservation. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        bookingSubmitBtn.classList.remove('submitting');
+                        bookingSubmitBtn.disabled = false;
+                        alert("There was a connection error. Please try again.");
+                    });
             }
         });
     }
@@ -838,17 +838,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset booking form and states
         bookingForm.reset();
         bookingState = { date: null, time: "" };
-        
+
         // Reset summary views
         summaryDate.textContent = "Choose Date";
         summaryDate.classList.remove('text-gold');
         summaryTime.textContent = "Choose Time";
         summaryTime.classList.remove('text-gold');
-        
+
         // Clear active classes in calendar and slots
         document.querySelectorAll('.calendar-day').forEach(cell => cell.classList.remove('active-date'));
         timeSlots.forEach(slot => slot.classList.remove('active-slot'));
-        
+
         // Route back to portfolio or home
         window.location.hash = '#home';
     }
@@ -919,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
-                fetch("https://formsubmit.co/ajax/moonlightstudiopro369@gmail.com", {
+                fetch("https://formsubmit.co/ajax/sudarsanpalavalasa@gmail.com", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -932,22 +932,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         "Message": messageInput.value.trim()
                     })
                 })
-                .then(response => {
-                    submitBtn.classList.remove('submitting');
-                    submitBtn.disabled = false;
-                    
-                    if (response.ok) {
-                        // Show success display panel
-                        successOverlay.classList.add('open');
-                    } else {
-                        alert("There was an error sending your inquiry. Please try again.");
-                    }
-                })
-                .catch(error => {
-                    submitBtn.classList.remove('submitting');
-                    submitBtn.disabled = false;
-                    alert("There was a connection error. Please try again.");
-                });
+                    .then(response => {
+                        submitBtn.classList.remove('submitting');
+                        submitBtn.disabled = false;
+
+                        if (response.ok) {
+                            // Show success display panel
+                            successOverlay.classList.add('open');
+                        } else {
+                            alert("There was an error sending your inquiry. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        submitBtn.classList.remove('submitting');
+                        submitBtn.disabled = false;
+                        alert("There was a connection error. Please try again.");
+                    });
             }
         });
     }
@@ -955,7 +955,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (successClose) {
         successClose.addEventListener('click', () => {
             contactForm.reset();
-            
+
             document.querySelectorAll('.contact-form-panel .form-group').forEach(group => {
                 group.classList.remove('error');
             });
