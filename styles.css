@@ -848,24 +848,21 @@ button, input, textarea, select {
     color: var(--text-secondary);
 }
 
-.skills-highlight-list {
-    list-style: none;
-    margin-top: 30px;
-}
-
-.skills-highlight-list li {
+.about-closing-tagline {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--accent-gold);
+    margin-top: 35px;
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-    font-weight: 400;
+    font-style: italic;
 }
 
-.skills-highlight-list li i {
+.about-closing-tagline i {
+    font-size: 1.1rem;
     color: var(--accent-gold);
-    font-size: 1rem;
 }
 
 /* Counters Stats Panel */
@@ -967,6 +964,22 @@ button, input, textarea, select {
 
 
 /* 9. SERVICES SECTION */
+.services-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: -30px auto 60px;
+    padding: 0 20px;
+}
+
+.services-tagline-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--accent-gold);
+    font-style: italic;
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
