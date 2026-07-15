@@ -813,37 +813,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(formData)
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    submitBtn.classList.remove('submitting');
-                    submitBtn.disabled = false;
-                    // Show success display panel
-                    successOverlay.classList.add('open');
-                })
-                .catch(error => {
-                    console.error('Error submitting form via AJAX, falling back to mailto:', error);
-                    
-                    // Fallback to mailto if AJAX fails (e.g. offline, adblocker, server down)
-                    const mailtoSubject = encodeURIComponent(`New Event Inquiry [${eventTypeInput.value.trim()}]`);
-                    const mailtoBody = encodeURIComponent(
-                        `Full Name: ${nameInput.value.trim()}\n` +
-                        `Email Address: ${emailInput.value.trim()}\n` +
-                        `Phone Number: ${phoneInput.value.trim()}\n` +
-                        `Event Type: ${eventTypeInput.value.trim()}\n` +
-                        `Preferred Event Date: ${eventDateInput.value.trim()}\n\n` +
-                        `Message:\n${messageInput.value.trim()}`
-                    );
-                    window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        submitBtn.classList.remove('submitting');
+                        submitBtn.disabled = false;
+                        // Show success display panel
+                        successOverlay.classList.add('open');
+                    })
+                    .catch(error => {
+                        console.error('Error submitting form via AJAX, falling back to mailto:', error);
 
-                    submitBtn.classList.remove('submitting');
-                    submitBtn.disabled = false;
-                    successOverlay.classList.add('open');
-                });
+                        // Fallback to mailto if AJAX fails (e.g. offline, adblocker, server down)
+                        const mailtoSubject = encodeURIComponent(`New Event Inquiry [${eventTypeInput.value.trim()}]`);
+                        const mailtoBody = encodeURIComponent(
+                            `Full Name: ${nameInput.value.trim()}\n` +
+                            `Email Address: ${emailInput.value.trim()}\n` +
+                            `Phone Number: ${phoneInput.value.trim()}\n` +
+                            `Event Type: ${eventTypeInput.value.trim()}\n` +
+                            `Preferred Event Date: ${eventDateInput.value.trim()}\n\n` +
+                            `Message:\n${messageInput.value.trim()}`
+                        );
+                        window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
+                        submitBtn.classList.remove('submitting');
+                        submitBtn.disabled = false;
+                        successOverlay.classList.add('open');
+                    });
             }
         });
     }
@@ -864,9 +864,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     // 12. BESPOKE CLIENT REVIEWS SYSTEM (Google Sheets & Apps Script Integration)
     // ==========================================================================
-    
+
     // Web App URL configuration (Paste your deployed Google Apps Script URL here)
-    const APPS_SCRIPT_URL = ""; 
+    const APPS_SCRIPT_URL = "";
 
     const reviewForm = document.getElementById('review-submit-form');
     const reviewNameInput = document.getElementById('review-name');
@@ -928,7 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Interactive Star Rating System
     const starButtons = document.querySelectorAll('.rating-star-btn');
-    
+
     starButtons.forEach(btn => {
         // Hover Enter
         btn.addEventListener('mouseenter', () => {
@@ -945,13 +945,13 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const selectedVal = parseInt(btn.getAttribute('data-star-val'));
             reviewRatingInput.value = selectedVal;
-            
+
             // Trigger input validation check clear
             const parent = reviewRatingInput.closest('.form-group');
             if (parent && parent.classList.contains('error')) {
                 parent.classList.remove('error');
             }
-            
+
             highlightStars(selectedVal, 'active-star');
         });
     });
@@ -960,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
         starButtons.forEach(btn => {
             const starVal = parseInt(btn.getAttribute('data-star-val'));
             const icon = btn.querySelector('i');
-            
+
             if (starVal <= rating) {
                 btn.classList.add(className);
                 if (icon) {
@@ -983,12 +983,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetStarsHighlight() {
         const activeVal = parseInt(reviewRatingInput.value) || 0;
-        
+
         starButtons.forEach(btn => {
             btn.classList.remove('hover-star');
             const starVal = parseInt(btn.getAttribute('data-star-val'));
             const icon = btn.querySelector('i');
-            
+
             if (starVal <= activeVal) {
                 btn.classList.add('active-star');
                 if (icon) {
@@ -1095,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const avg = sum / total;
-        
+
         // Update values in HTML
         document.getElementById('stats-avg-val').textContent = avg.toFixed(1);
         document.getElementById('stats-count-val').textContent = `Based on ${total} reviews`;
@@ -1119,7 +1119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const percentage = Math.round((counts[star] / total) * 100);
             const fill = document.getElementById(`bar-${star}-fill`);
             const countLabel = document.getElementById(`bar-${star}-count`);
-            
+
             if (fill) fill.style.width = `${percentage}%`;
             if (countLabel) countLabel.textContent = `${percentage}%`;
         }
@@ -1129,7 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderReviews(reviews) {
         // Sort reviews by date descending
         const sorted = [...reviews].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        
+
         reviewsFeedContainer.innerHTML = "";
 
         sorted.forEach(rev => {
@@ -1189,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper: Escape user input to avoid XSS injections
     function escapeHTML(str) {
         if (!str) return "";
-        return str.replace(/[&<>'"]/g, 
+        return str.replace(/[&<>'"]/g,
             tag => ({
                 '&': '&amp;',
                 '<': '&lt;',
@@ -1224,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isEmailValid = checkContactField(reviewEmailInput, validateEmail);
             const isEventTypeValid = checkContactField(reviewEventTypeInput);
             const isMessageValid = checkContactField(reviewMessageInput);
-            
+
             // Custom rating check
             let isRatingValid = true;
             const ratingVal = reviewRatingInput.value.trim();
@@ -1258,7 +1258,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         reviewSubmitBtn.classList.remove('submitting');
                         reviewSubmitBtn.disabled = false;
-                        
+
                         // Show success banner
                         reviewSuccessOverlay.classList.add('open');
                     }, 1200);
@@ -1272,32 +1272,32 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify(payload)
                     })
-                    .then(() => {
-                        // 'no-cors' resolves opaque responses successfully, so treat as done
-                        reviewSubmitBtn.classList.remove('submitting');
-                        reviewSubmitBtn.disabled = false;
-                        reviewSuccessOverlay.classList.add('open');
-                    })
-                    .catch(err => {
-                        console.error("Error submitting review to sheet database:", err);
-                        alert("We encountered a connectivity issue submitting your review. Reverting to email backup.");
-                        
-                        // Fallback backup: mailto link
-                        const email = "moonlightstudioandphotography@gmail.com";
-                        const mailtoSubject = encodeURIComponent(`Client Review [${payload.eventType}]`);
-                        const mailtoBody = encodeURIComponent(
-                            `Full Name: ${payload.name}\n` +
-                            `Email: ${payload.email}\n` +
-                            `Rating: ${payload.rating} Stars\n` +
-                            `Event Type: ${payload.eventType}\n\n` +
-                            `Message:\n${payload.message}`
-                        );
-                        window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
-                        
-                        reviewSubmitBtn.classList.remove('submitting');
-                        reviewSubmitBtn.disabled = false;
-                        reviewSuccessOverlay.classList.add('open');
-                    });
+                        .then(() => {
+                            // 'no-cors' resolves opaque responses successfully, so treat as done
+                            reviewSubmitBtn.classList.remove('submitting');
+                            reviewSubmitBtn.disabled = false;
+                            reviewSuccessOverlay.classList.add('open');
+                        })
+                        .catch(err => {
+                            console.error("Error submitting review to sheet database:", err);
+                            alert("We encountered a connectivity issue submitting your review. Reverting to email backup.");
+
+                            // Fallback backup: mailto link
+                            const email = "moonlightstudioandphotography@gmail.com";
+                            const mailtoSubject = encodeURIComponent(`Client Review [${payload.eventType}]`);
+                            const mailtoBody = encodeURIComponent(
+                                `Full Name: ${payload.name}\n` +
+                                `Email: ${payload.email}\n` +
+                                `Rating: ${payload.rating} Stars\n` +
+                                `Event Type: ${payload.eventType}\n\n` +
+                                `Message:\n${payload.message}`
+                            );
+                            window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
+                            reviewSubmitBtn.classList.remove('submitting');
+                            reviewSubmitBtn.disabled = false;
+                            reviewSuccessOverlay.classList.add('open');
+                        });
                 }
             }
         });
