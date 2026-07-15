@@ -1048,8 +1048,8 @@ document.addEventListener('DOMContentLoaded', () => {
         filePreviewImg.src = "";
     }
 
-    // Load & Render Approved Reviews
-    function loadReviews() {
+    // Load & Render Approved Reviews using async/await
+    async function loadReviews() {
         if (!APPS_SCRIPT_URL) {
             console.log("No APPS_SCRIPT_URL configured. Displaying premium mock reviews.");
             renderReviews(MOCK_REVIEWS);
@@ -1064,26 +1064,56 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        fetch(APPS_SCRIPT_URL)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success" && data.reviews && data.reviews.length > 0) {
-                    renderReviews(data.reviews);
-                } else {
-                    console.log("No approved reviews returned from server. Falling back to mock data.");
-                    renderReviews(MOCK_REVIEWS);
-                }
-            })
-            .catch(err => {
-                console.error("Error loading reviews from database:", err);
-                renderReviews(MOCK_REVIEWS); // Fallback on error
-            });
+        try {
+            const response = await fetch(APPS_SCRIPT_URL);
+            if (!response.ok) {
+                throw new Error(`Server returned status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === "success" && data.reviews) {
+                renderReviews(data.reviews);
+            } else {
+                throw new Error(data.message || "Unknown error occurred on server.");
+            }
+        } catch (err) {
+            console.error("Error loading reviews from database:", err);
+            // Render user-friendly error message on the page
+            reviewsFeedContainer.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #e57373; border: 1px solid rgba(229, 115, 115, 0.2); background-color: rgba(229, 115, 115, 0.03);">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>
+                    <p style="font-weight: 400; margin-bottom: 10px;">Atelier Testimonials Unavailable</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px;">We were unable to connect to the reviews database. Please check your connection or try again.</p>
+                    <button type="button" class="btn btn-outline" onclick="window.loadReviews();" style="font-size: 0.7rem; padding: 8px 16px; min-width: auto; width: auto; display: inline-block;">Retry Connection</button>
+                </div>
+            `;
+            // Calculate statistics using mock reviews so stats overview is still filled with placeholder data
+            compileStatistics(MOCK_REVIEWS);
+        }
     }
+
+    // Expose loadReviews globally to be accessible by inline HTML retry button
+    window.loadReviews = loadReviews;
 
     // Compile Ratings Statistics Summary
     function compileStatistics(reviews) {
         const total = reviews.length;
-        if (total === 0) return;
+        if (total === 0) {
+            // Reset stats display if no reviews are available
+            document.getElementById('stats-avg-val').textContent = "0.0";
+            document.getElementById('stats-count-val').textContent = `Based on 0 reviews`;
+            const starsBox = document.getElementById('stats-stars-box');
+            starsBox.innerHTML = "";
+            for (let i = 1; i <= 5; i++) {
+                starsBox.innerHTML += `<i class="fa-regular fa-star text-gold"></i>`;
+            }
+            for (let star = 5; star >= 1; star--) {
+                const fill = document.getElementById(`bar-${star}-fill`);
+                const countLabel = document.getElementById(`bar-${star}-count`);
+                if (fill) fill.style.width = `0%`;
+                if (countLabel) countLabel.textContent = `0%`;
+            }
+            return;
+        }
 
         let sum = 0;
         const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
@@ -1127,8 +1157,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render Review Cards
     function renderReviews(reviews) {
+        if (!reviews || reviews.length === 0) {
+            reviewsFeedContainer.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: var(--text-muted); border: 1px dashed var(--border-light);">
+                    <i class="fa-regular fa-comment-dots" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 15px; display: block;"></i>
+                    <p style="font-weight: 300;">No testimonials published yet.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Be the first to share your creative experience with Moonlight Studio.</p>
+                </div>
+            `;
+            compileStatistics([]);
+            return;
+        }
+
+        // Deduplicate reviews based on Name, Timestamp, and Message
+        const seen = new Set();
+        const uniqueReviews = [];
+        reviews.forEach(rev => {
+            if (!rev.name || !rev.timestamp || !rev.message) return;
+            const key = `${rev.name.trim()}_${new Date(rev.timestamp).getTime()}_${rev.message.trim()}`;
+            if (!seen.has(key)) {
+                seen.add(key);
+                uniqueReviews.push(rev);
+            }
+        });
+
         // Sort reviews by date descending
-        const sorted = [...reviews].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        const sorted = [...uniqueReviews].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
         reviewsFeedContainer.innerHTML = "";
 

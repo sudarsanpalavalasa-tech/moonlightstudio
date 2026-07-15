@@ -76,20 +76,18 @@ function doGet(e) {
     // Skip row 0 (headers)
     for (var i = 1; i < rows.length; i++) {
       var row = rows[i];
-      var status = row[8] ? row[8].toString().trim() : "";
+      if (!row[1]) continue; // Skip rows where name is empty
       
-      if (status === "Approved") {
-        reviews.push({
-          timestamp: row[0],
-          name: row[1],
-          email: row[2],
-          phone: row[3],
-          eventType: row[4],
-          rating: parseInt(row[5]) || 5,
-          message: row[6],
-          photoUrl: row[7] || ""
-        });
-      }
+      reviews.push({
+        timestamp: row[0],
+        name: row[1],
+        email: row[2],
+        phone: row[3],
+        eventType: row[4],
+        rating: parseInt(row[5]) || 5,
+        message: row[6],
+        photoUrl: row[7] || ""
+      });
     }
     
     return ContentService.createTextOutput(JSON.stringify({ status: "success", reviews: reviews }))
