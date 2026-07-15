@@ -724,20 +724,45 @@
                                 <span class="error-msg" id="email-error">Please provide a valid email.</span>
                             </div>
 
-                            <!-- Subject Field -->
+                            <!-- Phone Number Field -->
                             <div class="form-group">
-                                <input type="text" id="contact-subject" name="subject" placeholder=" ">
-                                <label for="contact-subject">Inquiry Subject</label>
+                                <input type="tel" id="contact-phone" name="phone" required placeholder=" ">
+                                <label for="contact-phone">Phone Number</label>
                                 <span class="input-line"></span>
-                                <span class="error-msg" id="subject-error">Subject is required.</span>
+                                <span class="error-msg" id="phone-error">Phone number is required.</span>
+                            </div>
+
+                            <!-- Event Type Dropdown Field -->
+                            <div class="form-group select-group">
+                                <select id="contact-event-type" name="eventType" required>
+                                    <option value="" disabled selected hidden></option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="Pre-Wedding">Pre-Wedding</option>
+                                    <option value="Birthday">Birthday</option>
+                                    <option value="Portrait">Portrait</option>
+                                    <option value="Event">Event</option>
+                                    <option value="Commercial">Commercial</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label for="contact-event-type">Event Type</label>
+                                <span class="input-line"></span>
+                                <span class="select-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                                <span class="error-msg" id="event-type-error">Please select an event type.</span>
+                            </div>
+
+                            <!-- Preferred Event Date Field -->
+                            <div class="form-group date-group">
+                                <input type="date" id="contact-event-date" name="eventDate" required placeholder=" ">
+                                <label for="contact-event-date">Preferred Event Date</label>
+                                <span class="input-line"></span>
+                                <span class="error-msg" id="event-date-error">Preferred event date is required.</span>
                             </div>
 
                             <!-- Message Field -->
                             <div class="form-group text-area-group">
                                 <textarea id="contact-message" name="message" required placeholder=" "
                                     rows="5"></textarea>
-                                <label for="contact-message">Detail your projects, exhibition slots, prints, or
-                                    ideas...</label>
+                                <label for="contact-message">Message</label>
                                 <span class="input-line"></span>
                                 <span class="error-msg" id="message-error">Message cannot be empty.</span>
                             </div>

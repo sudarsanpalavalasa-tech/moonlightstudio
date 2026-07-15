@@ -1728,7 +1728,7 @@ button, input, textarea, select {
     margin-bottom: 35px;
 }
 
-.form-group input, .form-group textarea {
+.form-group input, .form-group textarea, .form-group select {
     width: 100%;
     padding: 10px 0;
     font-size: 0.95rem;
@@ -1738,6 +1738,19 @@ button, input, textarea, select {
 
 .form-group textarea {
     resize: none;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background: transparent;
+}
+
+.form-group select option {
+    background-color: var(--bg-solid-card);
+    color: var(--text-primary);
 }
 
 .form-group label {
@@ -1753,12 +1766,49 @@ button, input, textarea, select {
 .form-group input:focus ~ label,
 .form-group input:not(:placeholder-shown) ~ label,
 .form-group textarea:focus ~ label,
-.form-group textarea:not(:placeholder-shown) ~ label {
+.form-group textarea:not(:placeholder-shown) ~ label,
+.form-group select:focus ~ label,
+.form-group select:valid ~ label {
     top: -15px;
     font-size: 0.7rem;
     color: var(--accent-gold);
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 5px;
+    top: 12px;
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    pointer-events: none;
+    transition: transform var(--transition-fast);
+}
+
+.form-group select:focus ~ .select-arrow {
+    transform: rotate(180deg);
+}
+
+.form-group input[type="date"] {
+    color: transparent;
+}
+
+.form-group input[type="date"]:focus,
+.form-group input[type="date"]:valid,
+.form-group input[type="date"]:not(:placeholder-shown) {
+    color: var(--text-primary);
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) sepia(0.6) saturate(3) hue-rotate(10deg);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
 }
 
 .input-line {
@@ -1772,16 +1822,18 @@ button, input, textarea, select {
 }
 
 .form-group input:focus ~ .input-line,
-.form-group textarea:focus ~ .input-line {
+.form-group textarea:focus ~ .input-line,
+.form-group select:focus ~ .input-line {
     width: 100%;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     border-bottom-color: transparent;
 }
 
-.form-group.error input, .form-group.error textarea {
+.form-group.error input, .form-group.error textarea, .form-group.error select {
     border-bottom-color: #e57373;
 }
 

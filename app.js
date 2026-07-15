@@ -734,7 +734,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('portfolio-contact-form');
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
-    const subjectInput = document.getElementById('contact-subject');
+    const phoneInput = document.getElementById('contact-phone');
+    const eventTypeInput = document.getElementById('contact-event-type');
+    const eventDateInput = document.getElementById('contact-event-date');
     const messageInput = document.getElementById('contact-message');
     const successOverlay = document.getElementById('form-success-banner');
     const successClose = document.getElementById('success-close-btn');
@@ -761,13 +763,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     }
 
-    [nameInput, emailInput, subjectInput, messageInput].forEach(input => {
+    [nameInput, emailInput, phoneInput, eventTypeInput, eventDateInput, messageInput].forEach(input => {
         if (input) {
-            input.addEventListener('input', () => {
-                const parent = input.closest('.form-group');
-                if (parent.classList.contains('error')) {
-                    parent.classList.remove('error');
-                }
+            ['input', 'change'].forEach(evtName => {
+                input.addEventListener(evtName, () => {
+                    const parent = input.closest('.form-group');
+                    if (parent.classList.contains('error')) {
+                        parent.classList.remove('error');
+                    }
+                });
             });
         }
     });
@@ -779,21 +783,25 @@ document.addEventListener('DOMContentLoaded', () => {
             // Run validation check
             const isNameValid = checkContactField(nameInput);
             const isEmailValid = checkContactField(emailInput, validateEmail);
-            const isSubjectValid = checkContactField(subjectInput);
+            const isPhoneValid = checkContactField(phoneInput);
+            const isEventTypeValid = checkContactField(eventTypeInput);
+            const isEventDateValid = checkContactField(eventDateInput);
             const isMessageValid = checkContactField(messageInput);
 
-            if (isNameValid && isEmailValid && isSubjectValid && isMessageValid) {
+            if (isNameValid && isEmailValid && isPhoneValid && isEventTypeValid && isEventDateValid && isMessageValid) {
                 // Form is valid - initiate loading animation
                 submitBtn.classList.add('submitting');
                 submitBtn.disabled = true;
 
                 const email = "moonlightstudioandphotography@gmail.com";
                 const formData = {
-                    Name: nameInput.value.trim(),
-                    Email: emailInput.value.trim(),
-                    Subject: subjectInput.value.trim(),
-                    Message: messageInput.value.trim(),
-                    _subject: `New Contact Inquiry: ${subjectInput.value.trim()}`
+                    "Full Name": nameInput.value.trim(),
+                    "Email Address": emailInput.value.trim(),
+                    "Phone Number": phoneInput.value.trim(),
+                    "Event Type": eventTypeInput.value.trim(),
+                    "Preferred Event Date": eventDateInput.value.trim(),
+                    "Message": messageInput.value.trim(),
+                    _subject: `New Event Inquiry [${eventTypeInput.value.trim()}] from ${nameInput.value.trim()}`
                 };
 
                 // Submit form data using FormSubmit AJAX API
@@ -821,10 +829,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Error submitting form via AJAX, falling back to mailto:', error);
                     
                     // Fallback to mailto if AJAX fails (e.g. offline, adblocker, server down)
-                    const mailtoSubject = encodeURIComponent(subjectInput.value.trim());
+                    const mailtoSubject = encodeURIComponent(`New Event Inquiry [${eventTypeInput.value.trim()}]`);
                     const mailtoBody = encodeURIComponent(
-                        `Name: ${nameInput.value.trim()}\n` +
-                        `Email: ${emailInput.value.trim()}\n\n` +
+                        `Full Name: ${nameInput.value.trim()}\n` +
+                        `Email Address: ${emailInput.value.trim()}\n` +
+                        `Phone Number: ${phoneInput.value.trim()}\n` +
+                        `Event Type: ${eventTypeInput.value.trim()}\n` +
+                        `Preferred Event Date: ${eventDateInput.value.trim()}\n\n` +
                         `Message:\n${messageInput.value.trim()}`
                     );
                     window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
