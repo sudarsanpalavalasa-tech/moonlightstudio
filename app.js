@@ -862,7 +862,480 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================================
-    // 12. SCROLL EVENTS (Indicator & Header Sticky styling)
+    // 12. BESPOKE CLIENT REVIEWS SYSTEM (Google Sheets & Apps Script Integration)
+    // ==========================================================================
+    
+    // Web App URL configuration (Paste your deployed Google Apps Script URL here)
+    const APPS_SCRIPT_URL = ""; 
+
+    const reviewForm = document.getElementById('review-submit-form');
+    const reviewNameInput = document.getElementById('review-name');
+    const reviewEmailInput = document.getElementById('review-email');
+    const reviewPhoneInput = document.getElementById('review-phone');
+    const reviewEventTypeInput = document.getElementById('review-event-type');
+    const reviewRatingInput = document.getElementById('review-rating-val');
+    const reviewMessageInput = document.getElementById('review-message');
+    const reviewPhotoInput = document.getElementById('review-photo-input');
+    const reviewSuccessOverlay = document.getElementById('review-success-banner');
+    const reviewSuccessClose = document.getElementById('review-success-close-btn');
+    const reviewSubmitBtn = document.getElementById('review-submit-btn');
+    const reviewsFeedContainer = document.getElementById('reviews-feed-container');
+
+    const fileChosenText = document.getElementById('file-chosen-text');
+    const filePreviewContainer = document.getElementById('file-preview-container');
+    const filePreviewImg = document.getElementById('file-preview-img');
+    const removePreviewBtn = document.getElementById('remove-preview-btn-el');
+
+    let uploadedPhotoBase64 = "";
+    let uploadedPhotoName = "";
+    let uploadedPhotoMimeType = "";
+
+    // Default Premium Mock Reviews (Used as fallback/preview prior to backend setup)
+    const MOCK_REVIEWS = [
+        {
+            name: "Evelyn Sterling",
+            rating: 5,
+            eventType: "Wedding",
+            timestamp: "2026-05-18T10:30:00Z",
+            message: "Moonlight Studio captured our wedding with unmatched fine-art composition. The dramatic play of shadow and golden light produced museum-quality images that we will treasure forever. Their coordination and luxury approach was elite.",
+            photoUrl: ""
+        },
+        {
+            name: "Marcus Vance",
+            rating: 5,
+            eventType: "Commercial",
+            timestamp: "2026-06-02T14:15:00Z",
+            message: "Our real estate and design portfolio campaign was shot by their architectural team. They captured structural details, materials, and natural shadows with extreme fidelity. The absolute best photography agency for commercial luxury.",
+            photoUrl: ""
+        },
+        {
+            name: "Aria Thorne",
+            rating: 5,
+            eventType: "Portrait",
+            timestamp: "2026-06-25T11:00:00Z",
+            message: "My fine-art portrait session was a highly curated experience. The director led the session with professional styling guidance, shaping visual shadows to highlight features beautifully. A deeply personal and stunning luxury portfolio.",
+            photoUrl: ""
+        },
+        {
+            name: "Julian & Clara",
+            rating: 4,
+            eventType: "Pre-Wedding",
+            timestamp: "2026-07-01T09:45:00Z",
+            message: "An absolutely stunning pre-wedding photoshoot. The outdoor scenery print compositions are breathtaking. Moonlight's team was highly professional and delivered our digital catalog exactly on schedule.",
+            photoUrl: ""
+        }
+    ];
+
+    // Initialize Interactive Star Rating System
+    const starButtons = document.querySelectorAll('.rating-star-btn');
+    
+    starButtons.forEach(btn => {
+        // Hover Enter
+        btn.addEventListener('mouseenter', () => {
+            const hoverVal = parseInt(btn.getAttribute('data-star-val'));
+            highlightStars(hoverVal, 'hover-star');
+        });
+
+        // Hover Leave
+        btn.addEventListener('mouseleave', () => {
+            resetStarsHighlight();
+        });
+
+        // Click selection
+        btn.addEventListener('click', () => {
+            const selectedVal = parseInt(btn.getAttribute('data-star-val'));
+            reviewRatingInput.value = selectedVal;
+            
+            // Trigger input validation check clear
+            const parent = reviewRatingInput.closest('.form-group');
+            if (parent && parent.classList.contains('error')) {
+                parent.classList.remove('error');
+            }
+            
+            highlightStars(selectedVal, 'active-star');
+        });
+    });
+
+    function highlightStars(rating, className) {
+        starButtons.forEach(btn => {
+            const starVal = parseInt(btn.getAttribute('data-star-val'));
+            const icon = btn.querySelector('i');
+            
+            if (starVal <= rating) {
+                btn.classList.add(className);
+                if (icon) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                }
+            } else {
+                if (className === 'active-star') {
+                    btn.classList.remove('active-star');
+                    if (icon) {
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-regular');
+                    }
+                } else {
+                    btn.classList.remove('hover-star');
+                }
+            }
+        });
+    }
+
+    function resetStarsHighlight() {
+        const activeVal = parseInt(reviewRatingInput.value) || 0;
+        
+        starButtons.forEach(btn => {
+            btn.classList.remove('hover-star');
+            const starVal = parseInt(btn.getAttribute('data-star-val'));
+            const icon = btn.querySelector('i');
+            
+            if (starVal <= activeVal) {
+                btn.classList.add('active-star');
+                if (icon) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                }
+            } else {
+                btn.classList.remove('active-star');
+                if (icon) {
+                    icon.classList.remove('fa-solid');
+                    icon.classList.add('fa-regular');
+                }
+            }
+        });
+    }
+
+    // Photo File Reader and Preview Handler
+    if (reviewPhotoInput) {
+        reviewPhotoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Simple size/type check
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file (PNG, JPG, WEBP).');
+                clearPhotoSelection();
+                return;
+            }
+
+            uploadedPhotoName = file.name;
+            uploadedPhotoMimeType = file.type;
+            fileChosenText.textContent = file.name;
+
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                uploadedPhotoBase64 = evt.target.result;
+                filePreviewImg.src = evt.target.result;
+                filePreviewContainer.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (removePreviewBtn) {
+        removePreviewBtn.addEventListener('click', () => {
+            clearPhotoSelection();
+        });
+    }
+
+    function clearPhotoSelection() {
+        reviewPhotoInput.value = "";
+        uploadedPhotoBase64 = "";
+        uploadedPhotoName = "";
+        uploadedPhotoMimeType = "";
+        fileChosenText.textContent = "Choose Image...";
+        filePreviewContainer.style.display = 'none';
+        filePreviewImg.src = "";
+    }
+
+    // Load & Render Approved Reviews
+    function loadReviews() {
+        if (!APPS_SCRIPT_URL) {
+            console.log("No APPS_SCRIPT_URL configured. Displaying premium mock reviews.");
+            renderReviews(MOCK_REVIEWS);
+            return;
+        }
+
+        // Display loader text in reviews box initially
+        reviewsFeedContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 15px;"></i>
+                <p>Loading curated reviews...</p>
+            </div>
+        `;
+
+        fetch(APPS_SCRIPT_URL)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success" && data.reviews && data.reviews.length > 0) {
+                    renderReviews(data.reviews);
+                } else {
+                    console.log("No approved reviews returned from server. Falling back to mock data.");
+                    renderReviews(MOCK_REVIEWS);
+                }
+            })
+            .catch(err => {
+                console.error("Error loading reviews from database:", err);
+                renderReviews(MOCK_REVIEWS); // Fallback on error
+            });
+    }
+
+    // Compile Ratings Statistics Summary
+    function compileStatistics(reviews) {
+        const total = reviews.length;
+        if (total === 0) return;
+
+        let sum = 0;
+        const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+
+        reviews.forEach(rev => {
+            const r = Math.min(5, Math.max(1, parseInt(rev.rating) || 5));
+            sum += r;
+            counts[r]++;
+        });
+
+        const avg = sum / total;
+        
+        // Update values in HTML
+        document.getElementById('stats-avg-val').textContent = avg.toFixed(1);
+        document.getElementById('stats-count-val').textContent = `Based on ${total} reviews`;
+
+        // Render dynamic stars in overview card
+        const starsBox = document.getElementById('stats-stars-box');
+        starsBox.innerHTML = "";
+        const roundedAvg = Math.round(avg * 2) / 2; // Round to nearest 0.5
+        for (let i = 1; i <= 5; i++) {
+            if (i <= roundedAvg) {
+                starsBox.innerHTML += `<i class="fa-solid fa-star text-gold"></i>`;
+            } else if (i - 0.5 === roundedAvg) {
+                starsBox.innerHTML += `<i class="fa-solid fa-star-half-stroke text-gold"></i>`;
+            } else {
+                starsBox.innerHTML += `<i class="fa-regular fa-star text-gold"></i>`;
+            }
+        }
+
+        // Update progress bars breakdown
+        for (let star = 5; star >= 1; star--) {
+            const percentage = Math.round((counts[star] / total) * 100);
+            const fill = document.getElementById(`bar-${star}-fill`);
+            const countLabel = document.getElementById(`bar-${star}-count`);
+            
+            if (fill) fill.style.width = `${percentage}%`;
+            if (countLabel) countLabel.textContent = `${percentage}%`;
+        }
+    }
+
+    // Render Review Cards
+    function renderReviews(reviews) {
+        // Sort reviews by date descending
+        const sorted = [...reviews].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        reviewsFeedContainer.innerHTML = "";
+
+        sorted.forEach(rev => {
+            const dateObj = new Date(rev.timestamp);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            // Generate stars HTML
+            let starsHtml = "";
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rev.rating) {
+                    starsHtml += `<i class="fa-solid fa-star text-gold" style="font-size: 0.8rem;"></i>`;
+                } else {
+                    starsHtml += `<i class="fa-regular fa-star text-gold" style="font-size: 0.8rem;"></i>`;
+                }
+            }
+
+            // Avatar photo HTML
+            let avatarHtml = "";
+            if (rev.photoUrl) {
+                avatarHtml = `<img src="${rev.photoUrl}" alt="${rev.name}" class="reviewer-avatar">`;
+            } else {
+                // Return generic initials mark
+                const initials = rev.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                avatarHtml = `<div class="reviewer-avatar-placeholder">${initials}</div>`;
+            }
+
+            const card = document.createElement('div');
+            card.className = "review-card animate-on-scroll fade-up revealed";
+            card.innerHTML = `
+                <div class="review-card-header">
+                    <div class="reviewer-profile-box">
+                        ${avatarHtml}
+                        <div class="reviewer-meta">
+                            <span class="reviewer-name">${escapeHTML(rev.name)}</span>
+                            <span class="review-event-badge">${escapeHTML(rev.eventType)}</span>
+                        </div>
+                    </div>
+                    <div class="review-rating-date">
+                        <div class="stars-display">
+                            ${starsHtml}
+                        </div>
+                        <span class="review-date">${formattedDate}</span>
+                    </div>
+                </div>
+                <p class="review-body-text">"${escapeHTML(rev.message)}"</p>
+            `;
+            reviewsFeedContainer.appendChild(card);
+        });
+
+        compileStatistics(sorted);
+    }
+
+    // Helper: Escape user input to avoid XSS injections
+    function escapeHTML(str) {
+        if (!str) return "";
+        return str.replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
+    }
+
+    // General Fields Reset
+    [reviewNameInput, reviewEmailInput, reviewPhoneInput, reviewEventTypeInput, reviewMessageInput].forEach(input => {
+        if (input) {
+            ['input', 'change'].forEach(evtName => {
+                input.addEventListener(evtName, () => {
+                    const parent = input.closest('.form-group');
+                    if (parent && parent.classList.contains('error')) {
+                        parent.classList.remove('error');
+                    }
+                });
+            });
+        }
+    });
+
+    // Review Submit Handler
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Run validation
+            const isNameValid = checkContactField(reviewNameInput);
+            const isEmailValid = checkContactField(reviewEmailInput, validateEmail);
+            const isEventTypeValid = checkContactField(reviewEventTypeInput);
+            const isMessageValid = checkContactField(reviewMessageInput);
+            
+            // Custom rating check
+            let isRatingValid = true;
+            const ratingVal = reviewRatingInput.value.trim();
+            const ratingParent = reviewRatingInput.closest('.form-group');
+            if (ratingVal === "" || parseInt(ratingVal) < 1 || parseInt(ratingVal) > 5) {
+                isRatingValid = false;
+                if (ratingParent) ratingParent.classList.add('error');
+            } else {
+                if (ratingParent) ratingParent.classList.remove('error');
+            }
+
+            if (isNameValid && isEmailValid && isEventTypeValid && isRatingValid && isMessageValid) {
+                // Initiate submit spinner animation
+                reviewSubmitBtn.classList.add('submitting');
+                reviewSubmitBtn.disabled = true;
+
+                const payload = {
+                    name: reviewNameInput.value.trim(),
+                    email: reviewEmailInput.value.trim(),
+                    phone: reviewPhoneInput.value.trim() || "",
+                    eventType: reviewEventTypeInput.value.trim(),
+                    rating: parseInt(ratingVal),
+                    message: reviewMessageInput.value.trim(),
+                    photoData: uploadedPhotoBase64,
+                    photoName: uploadedPhotoName,
+                    photoMimeType: uploadedPhotoMimeType
+                };
+
+                if (!APPS_SCRIPT_URL) {
+                    // Pre-setup local mock success transition delay
+                    setTimeout(() => {
+                        reviewSubmitBtn.classList.remove('submitting');
+                        reviewSubmitBtn.disabled = false;
+                        
+                        // Show success banner
+                        reviewSuccessOverlay.classList.add('open');
+                    }, 1200);
+                } else {
+                    // Send to deployed Web App backend
+                    fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // standard workaround for Apps Script redirect block
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(() => {
+                        // 'no-cors' resolves opaque responses successfully, so treat as done
+                        reviewSubmitBtn.classList.remove('submitting');
+                        reviewSubmitBtn.disabled = false;
+                        reviewSuccessOverlay.classList.add('open');
+                    })
+                    .catch(err => {
+                        console.error("Error submitting review to sheet database:", err);
+                        alert("We encountered a connectivity issue submitting your review. Reverting to email backup.");
+                        
+                        // Fallback backup: mailto link
+                        const email = "moonlightstudioandphotography@gmail.com";
+                        const mailtoSubject = encodeURIComponent(`Client Review [${payload.eventType}]`);
+                        const mailtoBody = encodeURIComponent(
+                            `Full Name: ${payload.name}\n` +
+                            `Email: ${payload.email}\n` +
+                            `Rating: ${payload.rating} Stars\n` +
+                            `Event Type: ${payload.eventType}\n\n` +
+                            `Message:\n${payload.message}`
+                        );
+                        window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+                        
+                        reviewSubmitBtn.classList.remove('submitting');
+                        reviewSubmitBtn.disabled = false;
+                        reviewSuccessOverlay.classList.add('open');
+                    });
+                }
+            }
+        });
+    }
+
+    if (reviewSuccessClose) {
+        reviewSuccessClose.addEventListener('click', () => {
+            // Reset all elements
+            reviewForm.reset();
+            clearPhotoSelection();
+            reviewRatingInput.value = "";
+            resetStarsHighlight();
+
+            // Clear errors
+            document.querySelectorAll('.review-form-panel .form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+
+            // Close success overlay
+            reviewSuccessOverlay.classList.remove('open');
+        });
+    }
+
+    // Trigger load of reviews when page is accessed/hash changes
+    window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#reviews') {
+            loadReviews();
+        }
+    });
+
+    // Check hash on initial load
+    if (window.location.hash === '#reviews') {
+        loadReviews();
+    }
+
+
+    // ==========================================================================
+    // 13. SCROLL EVENTS (Indicator & Header Sticky styling)
     // ==========================================================================
     const scrollBar = document.getElementById('scroll-progress-bar');
 

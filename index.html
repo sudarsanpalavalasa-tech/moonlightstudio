@@ -48,6 +48,7 @@
                 <a href="#about" class="nav-link" id="nav-link-about">About</a>
                 <a href="#services" class="nav-link" id="nav-link-services">Services</a>
                 <a href="#booking" class="nav-link" id="nav-link-booking">Book Session</a>
+                <a href="#reviews" class="nav-link" id="nav-link-reviews">Reviews</a>
                 <a href="#contact" class="nav-link" id="nav-link-contact">Contact</a>
             </nav>
 
@@ -68,6 +69,7 @@
             <a href="#about" class="mobile-link" id="mob-link-about">About</a>
             <a href="#services" class="mobile-link" id="mob-link-services">Services</a>
             <a href="#booking" class="mobile-link" id="mob-link-booking">Book Session</a>
+            <a href="#reviews" class="mobile-link" id="mob-link-reviews">Reviews</a>
             <a href="#contact" class="mobile-link" id="mob-link-contact">Contact</a>
         </nav>
         <div class="mobile-menu-footer">
@@ -791,6 +793,189 @@
             </div>
         </section>
 
+        <!-- 8. REVIEWS SECTION -->
+        <section id="reviews" class="view-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-subtitle">Client Reviews</span>
+                    <h2 class="section-title">Atelier Testimonials</h2>
+                    <div class="title-underline"></div>
+                    <p class="reviews-lead-text">"Every review reflects a beautiful memory we've had the privilege to capture."</p>
+                </div>
+
+                <div class="reviews-grid">
+                    <!-- Left Column: Statistics & Submission Form -->
+                    <div class="reviews-left-col animate-on-scroll slide-right">
+                        
+                        <!-- Statistics Card -->
+                        <div class="reviews-stats-card">
+                            <h3>Studio Sentiment</h3>
+                            <div class="stats-overview">
+                                <div class="rating-huge" id="stats-avg-val">4.9</div>
+                                <div class="stats-summary-box">
+                                    <div class="stars-display" id="stats-stars-box">
+                                        <!-- Stars dynamically injected -->
+                                    </div>
+                                    <span class="total-reviews-count" id="stats-count-val">Based on 0 reviews</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Breakdown Bars -->
+                            <div class="rating-breakdown" id="rating-breakdown-box">
+                                <div class="breakdown-row" data-stars="5">
+                                    <span class="star-label">5 Star</span>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" id="bar-5-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="count-label" id="bar-5-count">0%</span>
+                                </div>
+                                <div class="breakdown-row" data-stars="4">
+                                    <span class="star-label">4 Star</span>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" id="bar-4-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="count-label" id="bar-4-count">0%</span>
+                                </div>
+                                <div class="breakdown-row" data-stars="3">
+                                    <span class="star-label">3 Star</span>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" id="bar-3-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="count-label" id="bar-3-count">0%</span>
+                                </div>
+                                <div class="breakdown-row" data-stars="2">
+                                    <span class="star-label">2 Star</span>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" id="bar-2-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="count-label" id="bar-2-count">0%</span>
+                                </div>
+                                <div class="breakdown-row" data-stars="1">
+                                    <span class="star-label">1 Star</span>
+                                    <div class="progress-track">
+                                        <div class="progress-fill" id="bar-1-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="count-label" id="bar-1-count">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review Submission Form -->
+                        <div class="review-form-panel">
+                            <h3>Share Your Experience</h3>
+                            <form id="review-submit-form" autocomplete="off" novalidate>
+                                
+                                <!-- Name Input -->
+                                <div class="form-group">
+                                    <input type="text" id="review-name" name="name" required placeholder=" ">
+                                    <label for="review-name">Full Name</label>
+                                    <span class="input-line"></span>
+                                    <span class="error-msg" id="review-name-error">Full name is required.</span>
+                                </div>
+
+                                <!-- Email Input -->
+                                <div class="form-group">
+                                    <input type="email" id="review-email" name="email" required placeholder=" ">
+                                    <label for="review-email">Email Address</label>
+                                    <span class="input-line"></span>
+                                    <span class="error-msg" id="review-email-error">Please provide a valid email.</span>
+                                </div>
+
+                                <!-- Phone Input (Optional) -->
+                                <div class="form-group">
+                                    <input type="tel" id="review-phone" name="phone" placeholder=" ">
+                                    <label for="review-phone">Phone Number (Optional)</label>
+                                    <span class="input-line"></span>
+                                </div>
+
+                                <!-- Event Type Dropdown -->
+                                <div class="form-group select-group">
+                                    <select id="review-event-type" name="eventType" required>
+                                        <option value="" disabled selected hidden></option>
+                                        <option value="Wedding">Wedding</option>
+                                        <option value="Pre-Wedding">Pre-Wedding</option>
+                                        <option value="Birthday">Birthday</option>
+                                        <option value="Portrait">Portrait</option>
+                                        <option value="Event">Event</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <label for="review-event-type">Event Type</label>
+                                    <span class="input-line"></span>
+                                    <span class="select-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                                    <span class="error-msg" id="review-event-type-error">Please select an event type.</span>
+                                </div>
+
+                                <!-- Interactive 5-Star Rating Selector -->
+                                <div class="form-group star-select-group">
+                                    <span class="star-group-label">Overall Rating</span>
+                                    <div class="interactive-stars" id="interactive-star-container">
+                                        <button type="button" class="rating-star-btn" data-star-val="1" aria-label="1 Star"><i class="fa-regular fa-star"></i></button>
+                                        <button type="button" class="rating-star-btn" data-star-val="2" aria-label="2 Stars"><i class="fa-regular fa-star"></i></button>
+                                        <button type="button" class="rating-star-btn" data-star-val="3" aria-label="3 Stars"><i class="fa-regular fa-star"></i></button>
+                                        <button type="button" class="rating-star-btn" data-star-val="4" aria-label="4 Stars"><i class="fa-regular fa-star"></i></button>
+                                        <button type="button" class="rating-star-btn" data-star-val="5" aria-label="5 Stars"><i class="fa-regular fa-star"></i></button>
+                                    </div>
+                                    <input type="hidden" id="review-rating-val" name="rating" required value="">
+                                    <span class="error-msg" id="review-rating-error">Please select a star rating.</span>
+                                </div>
+
+                                <!-- Profile Photo Upload (Optional) -->
+                                <div class="form-group file-upload-group">
+                                    <span class="file-group-label">Profile Photo (Optional)</span>
+                                    <div class="custom-file-wrapper">
+                                        <input type="file" id="review-photo-input" accept="image/*" class="file-input-hidden">
+                                        <label for="review-photo-input" class="file-input-facade">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span id="file-chosen-text">Choose Image...</span>
+                                        </label>
+                                    </div>
+                                    <div class="file-preview-box" id="file-preview-container">
+                                        <img id="file-preview-img" src="" alt="Profile Preview">
+                                        <button type="button" class="remove-preview-btn" id="remove-preview-btn-el" aria-label="Remove Photo"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Message Textarea -->
+                                <div class="form-group text-area-group">
+                                    <textarea id="review-message" name="message" required placeholder=" " rows="5"></textarea>
+                                    <label for="review-message">Review Message</label>
+                                    <span class="input-line"></span>
+                                    <span class="error-msg" id="review-message-error">Review message cannot be empty.</span>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary btn-submit" id="review-submit-btn">
+                                    <span class="btn-text-content">Submit Review</span>
+                                    <span class="btn-loader-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                </button>
+
+                            </form>
+
+                            <!-- Success Banner overlay -->
+                            <div class="form-success-overlay" id="review-success-banner">
+                                <div class="success-icon-box">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <h3>Review Submitted!</h3>
+                                <p>Thank you for sharing your experience. Your review is pending moderator approval and will be published shortly.</p>
+                                <button class="btn btn-outline" id="review-success-close-btn">Done</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Reviews Display Cards Grid -->
+                    <div class="reviews-right-col animate-on-scroll slide-left">
+                        <h3>Client Testimonials</h3>
+                        <div class="reviews-list-container" id="reviews-feed-container">
+                            <!-- Review cards dynamically injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Global Footer -->
@@ -826,6 +1011,7 @@
                     <a href="#portfolio">Portfolio</a>
                     <a href="#about">About</a>
                     <a href="#booking">Book</a>
+                    <a href="#reviews">Reviews</a>
                     <a href="#contact">Contact</a>
                 </div>
             </div>
