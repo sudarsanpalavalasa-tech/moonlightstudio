@@ -51,7 +51,7 @@ function doPost(e) {
       data.rating,
       data.message,
       photoUrl,
-      "Pending" // Starts as Pending (hidden) until marked Approved by admin in the sheet
+      "Approved" // Saves with Approved status by default so it displays immediately
     ]);
     
     return ContentService.createTextOutput(JSON.stringify({ status: "success" }))

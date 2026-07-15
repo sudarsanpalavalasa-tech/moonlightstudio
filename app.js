@@ -1261,6 +1261,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Show success banner
                         reviewSuccessOverlay.classList.add('open');
+
+                        // Dynamically append new review locally for testing immediately
+                        const newMockReview = {
+                            name: payload.name,
+                            rating: payload.rating,
+                            eventType: payload.eventType,
+                            timestamp: new Date().toISOString(),
+                            message: payload.message,
+                            photoUrl: payload.photoData || "" // stores base64 preview locally
+                        };
+                        MOCK_REVIEWS.unshift(newMockReview);
+                        renderReviews(MOCK_REVIEWS);
                     }, 1200);
                 } else {
                     // Send to deployed Web App backend
@@ -1277,6 +1289,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             reviewSubmitBtn.classList.remove('submitting');
                             reviewSubmitBtn.disabled = false;
                             reviewSuccessOverlay.classList.add('open');
+
+                            // Refresh reviews list dynamically from Google Sheet without reloading
+                            loadReviews();
                         })
                         .catch(err => {
                             console.error("Error submitting review to sheet database:", err);
@@ -1297,6 +1312,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             reviewSubmitBtn.classList.remove('submitting');
                             reviewSubmitBtn.disabled = false;
                             reviewSuccessOverlay.classList.add('open');
+
+                            // Refresh list to pull any new online updates
+                            loadReviews();
                         });
                 }
             }
