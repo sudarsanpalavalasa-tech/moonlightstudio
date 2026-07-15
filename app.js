@@ -788,23 +788,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = true;
 
                 const email = "moonlightstudioandphotography@gmail.com";
-                const subject = encodeURIComponent(subjectInput.value.trim());
-                const body = encodeURIComponent(
-                    `Name: ${nameInput.value.trim()}\n` +
-                    `Email: ${emailInput.value.trim()}\n\n` +
-                    `Message:\n${messageInput.value.trim()}`
-                );
+                const formData = {
+                    Name: nameInput.value.trim(),
+                    Email: emailInput.value.trim(),
+                    Subject: subjectInput.value.trim(),
+                    Message: messageInput.value.trim(),
+                    _subject: `New Contact Inquiry: ${subjectInput.value.trim()}`
+                };
 
-                // Open default email client with pre-filled details
-                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-
-                setTimeout(() => {
+                // Submit form data using FormSubmit AJAX API
+                fetch(`https://formsubmit.co/ajax/${email}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
                     submitBtn.classList.remove('submitting');
                     submitBtn.disabled = false;
-
                     // Show success display panel
                     successOverlay.classList.add('open');
-                }, 1000);
+                })
+                .catch(error => {
+                    console.error('Error submitting form via AJAX, falling back to mailto:', error);
+                    
+                    // Fallback to mailto if AJAX fails (e.g. offline, adblocker, server down)
+                    const mailtoSubject = encodeURIComponent(subjectInput.value.trim());
+                    const mailtoBody = encodeURIComponent(
+                        `Name: ${nameInput.value.trim()}\n` +
+                        `Email: ${emailInput.value.trim()}\n\n` +
+                        `Message:\n${messageInput.value.trim()}`
+                    );
+                    window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
+                    submitBtn.classList.remove('submitting');
+                    submitBtn.disabled = false;
+                    successOverlay.classList.add('open');
+                });
             }
         });
     }
