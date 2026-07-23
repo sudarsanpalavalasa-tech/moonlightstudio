@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Moonlight Studio & Photography - Read and share client testimonials. Atelier reviews from our luxury photography sessions.">
+    <meta name="author" content="Moonlight Studio">
+    <title>Client Reviews | Moonlight Studio & Photography</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* =====================================================================
+           DESIGN TOKENS
+           ===================================================================== */
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0c0c0c;
+            --bg-card: rgba(15, 15, 15, 0.6);
+            --bg-solid-card: #121212;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b59023;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #777777;
+            --border-color: rgba(212, 175, 55, 0.15);
+            --border-light: rgba(255, 255, 255, 0.04);
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --transition-fast: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-medium: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            --glass-bg: rgba(10, 10, 10, 0.75);
+            --glass-blur: blur(15px);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+            --header-height: 90px;
+            --max-width: 1200px;
+        }
+
+        /* =====================================================================
+           RESET & BASE
+           ===================================================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold-hover);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+        }
+
+        p {
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-fast);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+        }
+
+        /* =====================================================================
+           SCROLL PROGRESS BAR
+           ===================================================================== */
+        #scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), #f0d060);
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* =====================================================================
+           HEADER
+           ===================================================================== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: var(--glass-border);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            height: 50px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .brand-title {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .brand-subtitle {
+            font-size: 0.45rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+
+        .back-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* =====================================================================
+           PAGE HERO
+           ===================================================================== */
+        .page-hero {
+            padding-top: calc(var(--header-height) + 60px);
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .title-underline {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 18px auto 0;
+        }
+
+        .reviews-lead-text {
+            max-width: 600px;
+            margin: 15px auto 0;
+            font-size: 1rem;
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* =====================================================================
+           MAIN LAYOUT
+           ===================================================================== */
+        .page-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 40px 100px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: 5.2fr 6.8fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        /* =====================================================================
+           LEFT COLUMN
+           ===================================================================== */
+        .reviews-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Stats Card */
+        .reviews-stats-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 30px;
+        }
+
+        .reviews-stats-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .stats-overview {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .rating-huge {
+            font-size: 4rem;
+            font-family: var(--font-serif);
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .stats-summary-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stars-display {
+            display: flex;
+            gap: 4px;
+            font-size: 1.1rem;
+        }
+
+        .text-gold {
+            color: var(--accent-gold);
+        }
+
+        .total-reviews-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rating-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .breakdown-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.8rem;
+        }
+
+        .star-label {
+            width: 50px;
+            color: var(--text-secondary);
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-gold);
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+
+        .count-label {
+            width: 35px;
+            text-align: right;
+            color: var(--text-muted);
+        }
+
+        /* Form Panel */
+        .review-form-panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 40px;
+            position: relative;
+        }
+
+        .review-form-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 0 10px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background-color: #1a1a1a;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 14px;
+            left: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: all var(--transition-fast);
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input:focus+label,
+        .form-group input:not(:placeholder-shown)+label,
+        .form-group textarea:focus+label,
+        .form-group textarea:not(:placeholder-shown)+label,
+        .form-group select:focus+label,
+        .form-group select.has-value+label {
+            top: -10px;
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .input-line {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: width var(--transition-medium);
+        }
+
+        .form-group input:focus~.input-line,
+        .form-group textarea:focus~.input-line,
+        .form-group select:focus~.input-line {
+            width: 100%;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 0;
+            top: 14px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            pointer-events: none;
+        }
+
+        .error-msg {
+            display: none;
+            font-size: 0.72rem;
+            color: #e57373;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-bottom-color: #e57373;
+        }
+
+        .form-group.error .error-msg {
+            display: block;
+        }
+
+        /* Star Rating */
+        .star-select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .star-group-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .interactive-stars {
+            display: flex;
+            gap: 10px;
+        }
+
+        .rating-star-btn {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            outline: none;
+            transition: color var(--transition-fast), transform var(--transition-fast);
+            padding: 0;
+        }
+
+        .rating-star-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .rating-star-btn.active-star,
+        .rating-star-btn.hover-star {
+            color: var(--accent-gold);
+        }
+
+        .rating-star-btn i {
+            pointer-events: none;
+        }
+
+        /* File Upload */
+        .file-upload-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .file-group-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .custom-file-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .file-input-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .file-input-facade {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border: 1px dashed var(--border-color);
+            background-color: rgba(255, 255, 255, 0.01);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all var(--transition-fast);
+        }
+
+        .file-input-facade:hover {
+            border-color: var(--accent-gold);
+            color: var(--text-primary);
+            background-color: rgba(212, 175, 55, 0.02);
+        }
+
+        .file-preview-box {
+            margin-top: 15px;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .file-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-preview-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+            border: none;
+            outline: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+
+        .remove-preview-btn:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        .text-area-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        .btn-submit .btn-loader-icon {
+            display: none;
+        }
+
+        .btn-submit.submitting .btn-text-content {
+            display: none;
+        }
+
+        .btn-submit.submitting .btn-loader-icon {
+            display: inline-flex;
+        }
+
+        .btn-submit.submitting {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Success Overlay */
+        .form-success-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: var(--bg-solid-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-medium);
+            z-index: 10;
+        }
+
+        .form-success-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-icon-box {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .form-success-overlay h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .form-success-overlay p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-width: 320px;
+            margin-bottom: 28px;
+        }
+
+        /* =====================================================================
+           RIGHT COLUMN – Reviews Feed
+           ===================================================================== */
+        .reviews-right-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviews-right-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .reviews-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-height: 900px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .reviews-list-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .reviews-list-container::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .reviews-list-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold);
+        }
+
+        /* Review Card */
+        .review-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 30px;
+            transition: transform var(--transition-medium), border-color var(--transition-medium);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .review-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .reviewer-profile-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .reviewer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .reviewer-avatar-placeholder {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        .reviewer-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviewer-name {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .review-event-badge {
+            font-size: 0.65rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .review-rating-date {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .review-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .review-body-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* =====================================================================
+           FOOTER
+           ===================================================================== */
+        .site-footer {
+            background-color: var(--bg-secondary);
+            border-top: var(--glass-border);
+            text-align: center;
+            padding: 30px 40px;
+        }
+
+        .site-footer p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .site-footer a {
+            color: var(--accent-gold);
+        }
+
+        .site-footer a:hover {
+            color: var(--accent-gold-hover);
+        }
+
+        /* =====================================================================
+           RESPONSIVE
+           ===================================================================== */
+        @media (max-width: 1024px) {
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .site-header {
+                padding: 0 24px;
+            }
+
+            .page-container {
+                padding: 0 24px 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .review-form-panel {
+                padding: 30px 20px;
+            }
+
+            .reviews-stats-card {
+                padding: 24px;
+            }
+
+            .stats-overview {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .review-card {
+                padding: 24px;
+            }
+
+            .review-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .review-rating-date {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar"></div>
+
+    <!-- ── HEADER ──────────────────────────────────────────────────────────── -->
+    <header class="site-header" id="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-link" id="logo-home-link" aria-label="Moonlight Studio home">
+                <img src="images/logo_icon.png" alt="Moonlight Studio Logo" class="logo-icon">
+                <div class="brand-text">
+                    <span class="brand-title">Moonlight</span>
+                    <span class="brand-subtitle">Studio &amp; Photography</span>
+                </div>
+            </a>
+            <a href="index.html#reviews" class="back-link" id="back-to-site-link" aria-label="Back to main site">
+                <i class="fa-solid fa-arrow-left"></i> Back to Site
+            </a>
+        </div>
+    </header>
+
+    <!-- ── PAGE HERO ───────────────────────────────────────────────────────── -->
+    <div class="page-hero">
+        <span class="section-subtitle">Client Reviews</span>
+        <h1 class="section-title">Atelier Testimonials</h1>
+        <div class="title-underline"></div>
+        <p class="reviews-lead-text">"Every review reflects a beautiful memory we've had the privilege to capture."</p>
+    </div>
+
+    <!-- ── MAIN CONTENT ────────────────────────────────────────────────────── -->
+    <div class="page-container">
+        <div class="reviews-grid">
+
+            <!-- LEFT COLUMN -->
+            <div class="reviews-left-col" id="reviews-left-col">
+
+                <!-- Statistics Card -->
+                <div class="reviews-stats-card" id="stats-card">
+                    <h3>Studio Sentiment</h3>
+                    <div class="stats-overview">
+                        <div class="rating-huge" id="stats-avg-val">4.9</div>
+                        <div class="stats-summary-box">
+                            <div class="stars-display" id="stats-stars-box"></div>
+                            <span class="total-reviews-count" id="stats-count-val">Based on 0 reviews</span>
+                        </div>
+                    </div>
+                    <div class="rating-breakdown" id="rating-breakdown-box">
+                        <div class="breakdown-row" data-stars="5">
+                            <span class="star-label">5 Star</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar-5-fill" style="width:0%"></div>
+                            </div>
+                            <span class="count-label" id="bar-5-count">0%</span>
+                        </div>
+                        <div class="breakdown-row" data-stars="4">
+                            <span class="star-label">4 Star</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar-4-fill" style="width:0%"></div>
+                            </div>
+                            <span class="count-label" id="bar-4-count">0%</span>
+                        </div>
+                        <div class="breakdown-row" data-stars="3">
+                            <span class="star-label">3 Star</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar-3-fill" style="width:0%"></div>
+                            </div>
+                            <span class="count-label" id="bar-3-count">0%</span>
+                        </div>
+                        <div class="breakdown-row" data-stars="2">
+                            <span class="star-label">2 Star</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar-2-fill" style="width:0%"></div>
+                            </div>
+                            <span class="count-label" id="bar-2-count">0%</span>
+                        </div>
+                        <div class="breakdown-row" data-stars="1">
+                            <span class="star-label">1 Star</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" id="bar-1-fill" style="width:0%"></div>
+                            </div>
+                            <span class="count-label" id="bar-1-count">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Submission Form -->
+                <div class="review-form-panel" id="review-form-panel">
+                    <h3>Share Your Experience</h3>
+                    <form id="review-submit-form" autocomplete="off" novalidate>
+
+                        <!-- Name -->
+                        <div class="form-group">
+                            <input type="text" id="review-name" name="name" required placeholder=" ">
+                            <label for="review-name">Full Name</label>
+                            <span class="input-line"></span>
+                            <span class="error-msg" id="review-name-error">Full name is required.</span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <input type="email" id="review-email" name="email" required placeholder=" ">
+                            <label for="review-email">Email Address</label>
+                            <span class="input-line"></span>
+                            <span class="error-msg" id="review-email-error">Please provide a valid email.</span>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <input type="tel" id="review-phone" name="phone" placeholder=" ">
+                            <label for="review-phone">Phone Number (Optional)</label>
+                            <span class="input-line"></span>
+                        </div>
+
+                        <!-- Event Type -->
+                        <div class="form-group select-group">
+                            <select id="review-event-type" name="eventType" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="Wedding">Wedding</option>
+                                <option value="Pre-Wedding">Pre-Wedding</option>
+                                <option value="Birthday">Birthday</option>
+                                <option value="Portrait">Portrait</option>
+                                <option value="Event">Event</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label for="review-event-type">Event Type</label>
+                            <span class="input-line"></span>
+                            <span class="select-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="error-msg" id="review-event-type-error">Please select an event type.</span>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div class="star-select-group form-group">
+                            <span class="star-group-label">Overall Rating</span>
+                            <div class="interactive-stars" id="interactive-star-container">
+                                <button type="button" class="rating-star-btn" data-star-val="1" aria-label="1 Star"><i
+                                        class="fa-regular fa-star"></i></button>
+                                <button type="button" class="rating-star-btn" data-star-val="2" aria-label="2 Stars"><i
+                                        class="fa-regular fa-star"></i></button>
+                                <button type="button" class="rating-star-btn" data-star-val="3" aria-label="3 Stars"><i
+                                        class="fa-regular fa-star"></i></button>
+                                <button type="button" class="rating-star-btn" data-star-val="4" aria-label="4 Stars"><i
+                                        class="fa-regular fa-star"></i></button>
+                                <button type="button" class="rating-star-btn" data-star-val="5" aria-label="5 Stars"><i
+                                        class="fa-regular fa-star"></i></button>
+                            </div>
+                            <input type="hidden" id="review-rating-val" name="rating" required value="">
+                            <span class="error-msg" id="review-rating-error">Please select a star rating.</span>
+                        </div>
+
+                        <!-- Profile Photo -->
+                        <div class="file-upload-group">
+                            <span class="file-group-label">Profile Photo (Optional)</span>
+                            <div class="custom-file-wrapper">
+                                <input type="file" id="review-photo-input" accept="image/*" class="file-input-hidden">
+                                <label for="review-photo-input" class="file-input-facade">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span id="file-chosen-text">Choose Image...</span>
+                                </label>
+                            </div>
+                            <div class="file-preview-box" id="file-preview-container">
+                                <img id="file-preview-img" src="" alt="Profile Preview">
+                                <button type="button" class="remove-preview-btn" id="remove-preview-btn-el"
+                                    aria-label="Remove Photo">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="form-group text-area-group">
+                            <textarea id="review-message" name="message" required placeholder=" " rows="5"></textarea>
+                            <label for="review-message">Review Message</label>
+                            <span class="input-line"></span>
+                            <span class="error-msg" id="review-message-error">Review message cannot be empty.</span>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-primary btn-submit" id="review-submit-btn">
+                            <span class="btn-text-content">Submit Review</span>
+                            <span class="btn-loader-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                        </button>
+
+                    </form>
+
+                    <!-- Success Overlay -->
+                    <div class="form-success-overlay" id="review-success-banner">
+                        <div class="success-icon-box"><i class="fa-solid fa-circle-check"></i></div>
+                        <h3>Review Submitted!</h3>
+                        <p>Thank you for sharing your experience. Your review is pending moderator approval and will be
+                            published shortly.</p>
+                        <button class="btn btn-outline" id="review-success-close-btn"
+                            style="width:auto;min-width:160px;">Done</button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END LEFT COLUMN -->
+
+            <!-- RIGHT COLUMN -->
+            <div class="reviews-right-col" id="reviews-right-col">
+                <h3>Client Testimonials</h3>
+                <div class="reviews-list-container" id="reviews-feed-container">
+                    <!-- Injected by review.js -->
+                </div>
+            </div>
+            <!-- END RIGHT COLUMN -->
+
+        </div>
+    </div>
+
+    <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+    <footer class="site-footer">
+        <p>&copy; 2026 <a href="index.html">Moonlight Studio &amp; Photography</a>. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDKs (compat v9 via CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+    <!-- Review Page Logic -->
+    <script src="review.js"></script>
+
+</body>
+
+</html>
